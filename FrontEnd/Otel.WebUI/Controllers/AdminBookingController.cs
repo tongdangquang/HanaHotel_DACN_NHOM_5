@@ -1,24 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Otel.EntityLayer.Concrete;
 using Otel.WebUI.DTOs.BookingDTO;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.Controllers
 {
     public class AdminBookingController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+		private readonly string _apiUrl;
 
-        public AdminBookingController(IHttpClientFactory httpClientFactory)
+		public AdminBookingController(IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _httpClientFactory = httpClientFactory;
-        }
+			_apiUrl = appSettings.Value.urlAPI;
+		}
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44355/api/Booking");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/Booking");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -33,7 +37,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> UpdateBooking(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:44355/api/Booking/{id}");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/Booking/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -48,7 +52,7 @@ namespace Otel.WebUI.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
-            var existingBookingResponse = await client.GetAsync($"https://localhost:44355/api/Booking/{updateBookingDTO.BookingId}");
+            var existingBookingResponse = await client.GetAsync($"{_apiUrl}/api/Booking/{updateBookingDTO.BookingId}");
 
             if (!existingBookingResponse.IsSuccessStatusCode)
             {
@@ -65,7 +69,7 @@ namespace Otel.WebUI.Controllers
 
             // 3. Güncellenmiş entity'yi API'ye gönder
             var updatedContent = new StringContent(JsonConvert.SerializeObject(existingBooking), System.Text.Encoding.UTF8, "application/json");
-            var updateResponse = await client.PutAsync($"https://localhost:44355/api/Booking", updatedContent);
+            var updateResponse = await client.PutAsync($"{_apiUrl}/api/Booking", updatedContent);
 
             if (updateResponse.IsSuccessStatusCode)
                 return RedirectToAction("Index");
@@ -79,7 +83,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> DeleteBooking(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:44355/api/Booking/{id}");
+            var response = await client.DeleteAsync($"{_apiUrl}/api/Booking/{id}");
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 

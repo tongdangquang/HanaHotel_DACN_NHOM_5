@@ -1,23 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Otel.WebUI.Models.Staff;
+using Microsoft.Extensions.Options;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.Controllers
 {
     public class StaffController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+		private readonly string _apiUrl;
 
-        public StaffController(IHttpClientFactory httpClientFactory)
+		public StaffController(IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _httpClientFactory = httpClientFactory;
-        }
+            _apiUrl = appSettings.Value.urlAPI;
+		}
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44355/api/Staff");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/Staff");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -40,7 +44,7 @@ namespace Otel.WebUI.Controllers
             var jsonData = System.Text.Json.JsonSerializer.Serialize(model);
             var jsonContent = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("https://localhost:44355/api/Staff", jsonContent);
+            var response = await client.PostAsync($"{_apiUrl}/api/Staff", jsonContent);
 
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
@@ -53,7 +57,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> DeleteStaff(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:44355/api/Staff/{id}");
+            var response = await client.DeleteAsync($"{_apiUrl}/api/Staff/{id}");
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
@@ -65,7 +69,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> UpdateStaff(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:44355/api/Staff/{id}");
+            var response = await client.GetAsync($"{_apiUrl}/api/Staff/{id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -92,7 +96,7 @@ namespace Otel.WebUI.Controllers
             var jsonData = JsonConvert.SerializeObject(updateStaffViewModel);
             StringContent stringContent = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync("https://localhost:44355/api/Staff", stringContent);
+            var response = await client.PutAsync($"{_apiUrl}/api/Staff", stringContent);
 
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");

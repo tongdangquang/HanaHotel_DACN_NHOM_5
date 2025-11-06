@@ -1,21 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Options;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.ViewComponents.Dashboard
 {
     public class _DashboardWidgetPartial : ViewComponent
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _apiUrl;
 
-        public _DashboardWidgetPartial(IHttpClientFactory httpClientFactory)
+        public _DashboardWidgetPartial(IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiUrl = appSettings.Value.urlAPI;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44355/api/DashboardWidget");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/DashboardWidget");
 
             if (responseMessage.IsSuccessStatusCode)
             {

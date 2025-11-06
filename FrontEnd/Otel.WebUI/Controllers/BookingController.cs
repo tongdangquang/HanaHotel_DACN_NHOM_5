@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using Otel.EntityLayer.Concrete;
 using Otel.WebUI.DTOs.BookingDTO;
 using System.Text;
+using Microsoft.Extensions.Options;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.Controllers
 {
@@ -12,10 +14,12 @@ namespace Otel.WebUI.Controllers
     public class BookingController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+		private readonly string _apiUrl;
 
-        public BookingController(IHttpClientFactory httpClientFactory)
+		public BookingController(IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiUrl = appSettings.Value.urlAPI;
         }
 
         public IActionResult Index()
@@ -34,7 +38,7 @@ namespace Otel.WebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createBookingDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            await client.PostAsync("https://localhost:44355/api/Booking", stringContent);
+            await client.PostAsync($"{_apiUrl}/api/Booking", stringContent);
             return RedirectToAction("Index", "Default");
         }
 

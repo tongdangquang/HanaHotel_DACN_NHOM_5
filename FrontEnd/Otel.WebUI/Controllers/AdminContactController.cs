@@ -1,28 +1,32 @@
 ﻿using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using Newtonsoft.Json;
 using Otel.EntityLayer.Concrete;
 using Otel.WebUI.DTOs.ContactDTO;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.Controllers
 {
     public class AdminContactController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+		private readonly string _apiUrl;
 
-        public AdminContactController(IHttpClientFactory httpClientFactory)
+		public AdminContactController(IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _httpClientFactory = httpClientFactory;
-        }
+            _apiUrl = appSettings.Value.urlAPI;
+		}
 
         [HttpGet]
         public async Task<IActionResult> Inbox([FromQuery] int? categoryId)
         {
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync(categoryId != null
-                                   ? $"https://localhost:44355/api/Contact/category/{categoryId}"
-                                   : "https://localhost:44355/api/Contact");
+                                   ? $"{_apiUrl}/api/Contact/category/{categoryId}"
+                                   : $"{_apiUrl}/api/Contact");
 
 
             if (!responseMessage.IsSuccessStatusCode)
@@ -43,7 +47,7 @@ namespace Otel.WebUI.Controllers
             var client = _httpClientFactory.CreateClient();
 
 
-            var responseMessage = await client.GetAsync($"https://localhost:44355/api/Contact/{id}");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/Contact/{id}");
 
             if (!responseMessage.IsSuccessStatusCode)
                 return NotFound("Email not found.");
@@ -58,7 +62,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> DeleteEmail(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:44355/api/Contact/{id}");
+            var response = await client.DeleteAsync($"{_apiUrl}/api/Contact/{id}");
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Inbox");
 
@@ -70,7 +74,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> OutgoingMessages()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44355/api/Contact/replied-count");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/Contact/replied-count");
 
             if (!responseMessage.IsSuccessStatusCode)
                 return View();
@@ -89,7 +93,7 @@ namespace Otel.WebUI.Controllers
 
             var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.GetAsync($"https://localhost:44355/api/Contact/{id}");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/Contact/{id}");
 
             if (!responseMessage.IsSuccessStatusCode)
                 return NotFound("Email not found.");
@@ -111,7 +115,7 @@ namespace Otel.WebUI.Controllers
 
             var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.GetAsync($"https://localhost:44355/api/Contact/{sendMessageDTO.ContactID}");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/Contact/{sendMessageDTO.ContactID}");
 
             if (!responseMessage.IsSuccessStatusCode)
             {
@@ -134,7 +138,7 @@ namespace Otel.WebUI.Controllers
             var updatedJsonData = JsonConvert.SerializeObject(contactEntity);
             var stringContent = new StringContent(updatedJsonData, System.Text.Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync("https://localhost:44355/api/Contact", stringContent);
+            var response = await client.PutAsync($"{_apiUrl}/api/Contact", stringContent);
 
             if (response.IsSuccessStatusCode)
             {

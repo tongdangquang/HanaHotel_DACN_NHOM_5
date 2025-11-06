@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Otel.DataAccessLayer.Concrete;
 using Otel.EntityLayer.Concrete;
 using Otel.WebUI.DTOs.GuestDTO;
+using Otel.WebUI.Models;
 using Otel.WebUI.ValidationRules.AdminGuestValidationRules;
 using System.Reflection;
 
@@ -32,7 +33,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 });
 
-
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

@@ -2,23 +2,28 @@
 using Newtonsoft.Json;
 using Otel.WebUI.DTOs.MessageCategoryDTO;
 using System.Text;
+using Microsoft.Extensions.Options;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.Controllers
 {
     public class AdminMessageCategoriesController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _apiUrl;
 
-        public AdminMessageCategoriesController(IHttpClientFactory httpClientFactory)
+
+        public AdminMessageCategoriesController(IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiUrl = appSettings.Value.urlAPI;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:44355/api/MessageCategory");
+            var response = await client.GetAsync($"{_apiUrl}/api/MessageCategory");
 
             if (response.IsSuccessStatusCode)
             {
@@ -54,7 +59,7 @@ namespace Otel.WebUI.Controllers
             var jsonData = System.Text.Json.JsonSerializer.Serialize(model);
             var jsonContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("https://localhost:44355/api/MessageCategory", jsonContent);
+            var response = await client.PostAsync($"{_apiUrl}/api/MessageCategory", jsonContent);
 
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
@@ -67,7 +72,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> UpdateMessageCategory(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:44355/api/MessageCategory/{id}");
+            var response = await client.GetAsync($"{_apiUrl}/api/MessageCategory/{id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -97,7 +102,7 @@ namespace Otel.WebUI.Controllers
             var jsonData = JsonConvert.SerializeObject(model);
             var stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync("https://localhost:44355/api/MessageCategory", stringContent);
+            var response = await client.PutAsync($"{_apiUrl}/api/MessageCategory", stringContent);
 
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
@@ -110,7 +115,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> DeleteMessageCategory(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:44355/api/MessageCategory/{id}");
+            var response = await client.DeleteAsync($"{_apiUrl}/api/MessageCategory/{id}");
 
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");

@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using Otel.EntityLayer.Concrete;
 using Otel.WebUI.DTOs.RegisterDTO;
 using Otel.WebUI.DTOs.WorkLocationDTO;
+using Microsoft.Extensions.Options;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.Controllers
 {
@@ -14,11 +16,13 @@ namespace Otel.WebUI.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpClientFactory _httpClientFactory;
+		private readonly string _apiUrl;
 
-        public RegisterController(UserManager<AppUser> userManager, IHttpClientFactory httpClientFactory)
+        public RegisterController(UserManager<AppUser> userManager, IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _userManager = userManager;
             _httpClientFactory = httpClientFactory;
+            _apiUrl = appSettings.Value.urlAPI;
         }
 
         [HttpGet]
@@ -64,7 +68,7 @@ namespace Otel.WebUI.Controllers
         private async Task<List<SelectListItem>> LoadWorkLocations()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44355/api/WorkLocation");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/WorkLocation");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();

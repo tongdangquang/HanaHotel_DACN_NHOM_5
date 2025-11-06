@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using Otel.WebUI.DTOs.ContactDTO;
 using Otel.WebUI.DTOs.MessageCategoryDTO;
 using System.Text;
+using Microsoft.Extensions.Options;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.Controllers
 {
@@ -14,17 +16,19 @@ namespace Otel.WebUI.Controllers
 
     {
         private readonly IHttpClientFactory _httpClientFactory;
+		private readonly string _apiUrl;
 
-        public ContactController(IHttpClientFactory httpClientFactory)
+		public ContactController(IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiUrl = appSettings.Value.urlAPI;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44355/api/MessageCategory");
+            var responseMessage = await client.GetAsync($"{_apiUrl}/api/MessageCategory");
 
             var jsonData = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             var categories = JsonConvert.DeserializeObject<List<ResultMessageCategoryDTO>>(jsonData);
@@ -62,14 +66,14 @@ namespace Otel.WebUI.Controllers
             var jsonData = JsonConvert.SerializeObject(contactDTO);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("https://localhost:44355/api/Contact", content);
+            var response = await client.PostAsync($"{_apiUrl}/api/Contact", content);
             return response.IsSuccessStatusCode;
         }
 
         private async Task<List<SelectListItem>> GetMessageCategories()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:44355/api/MessageCategory");
+            var response = await client.GetAsync($"{_apiUrl}/api/MessageCategory");
             var jsonData = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var categories = JsonConvert.DeserializeObject<List<ResultMessageCategoryDTO>>(jsonData);
 
