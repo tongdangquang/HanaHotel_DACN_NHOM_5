@@ -1,0 +1,73 @@
+﻿@model List<ResultBookingDTO>
+
+@{
+    ViewData["Title"] = "Bookings Management";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4" style="max-width: 100%;">
+    <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+    <div>
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Bookings</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered align-middle">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Check-In</th>
+                            <th scope="col">Check-Out</th>
+                            <th scope="col">Adults</th>
+                            <th scope="col">Children</th>
+                            <th scope="col">Room</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Special Request</th>
+                            <th scope="col" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.BookingId</td>
+                                <td>@item.Name</td>
+                                <td>@item.Email</td>
+                                <td>@item.CheckInDate.ToString("dd MMMM yyyy")</td>
+                                <td>@item.CheckOutDate.ToString("dd MMMM yyyy")</td>
+                                <td>@item.AdultCount</td>
+                                <td>@item.ChildCount</td>
+                                <td>@item.Room</td>
+                                <td>
+                                    <span class="badge
+                                    @(item.Status == Otel.EntityLayer.Concrete.BookingStatus.Pending ? "badge-warning" :
+                                      item.Status == Otel.EntityLayer.Concrete.BookingStatus.Confirmed ? "badge-success" :
+                                      item.Status == Otel.EntityLayer.Concrete.BookingStatus.Cancelled ? "badge-danger" :
+                                      item.Status == Otel.EntityLayer.Concrete.BookingStatus.Completed ? "badge-primary" :
+                                      "badge-secondary")">
+                                        @item.Status
+                                    </span>
+                                </td>
+                                <td>@(item.SpecialRequest ?? "None")</td>
+                                <td class="text-center">
+                                    <a href="/AdminBooking/UpdateBooking/@item.BookingId" class="btn btn-warning btn-sm" title="Edit Booking">
+                                        <i class="fa fa-pencil"></i> Edit
+                                    </a>
+                                    <a href="/AdminBooking/DeleteBooking/@item.BookingId"
+                                       class="btn btn-danger btn-sm"
+                                       title="Delete Booking"
+                                       onclick="return confirm('Are you sure you want to delete this booking?');">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

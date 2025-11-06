@@ -1,0 +1,52 @@
+﻿@model List<Otel.EntityLayer.Concrete.AppUser>
+
+
+@{
+    ViewData["Title"] = "User";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">User Management</h2>
+
+    <div class="mb-3">
+        <a href="@Url.Action("Index", "Register")" class="btn btn-primary">New user</a>
+    </div>
+
+    <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">City</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Work Location</th>
+                <th scope="col">Deparment</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.LastName</td>
+                    <td>@user.City</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@(user.WorkLocation!.WorkLocationCityName)/@(user.WorkLocation!.WorkLocationCountry) </td>
+                    <td>@user.Department</td>
+                    <td>
+                        <a href="@Url.Action("UpdateUser", "AdminUser", new { id = user.Id })" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("DeleteUser", "AdminUser", new { id = user.Id })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user member?');">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

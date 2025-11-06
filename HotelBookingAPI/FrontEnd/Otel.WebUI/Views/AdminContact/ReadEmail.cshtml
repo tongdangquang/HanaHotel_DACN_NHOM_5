@@ -1,0 +1,55 @@
+﻿@model DetailContactDTO
+
+@{
+    ViewData["Title"] = "Read Email";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="content-body">
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/AdminContact/Inbox">
+                        <i class="fa fa-arrow-left" aria-hidden="true" style="margin-right : 5px"></i> Inbox
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        @await Component.InvokeAsync("_ContactSidebarPartial")
+                        <div class="email-right-box">
+                            <div class="read-content">
+                                <hr>
+                                <div class="media mb-4 mt-1">
+                                    <div class="media-body">
+                                        <span class="float-right text-muted">@Model.Date.ToString("hh:mm tt")</span>
+                                        <h4 class="m-0 text-primary">@Model.Subject</h4>
+                                        <small class="text-muted">From: @Model.Email</small>
+                                    </div>
+                                </div>
+                                <h5 class="m-b-15">Hi, @Model.Name,</h5>
+                                <p>@Model.Message</p>
+                                <hr>
+                            </div>
+                            <div class="text-right">
+                                <a href="@Url.Action("SendEmail", "AdminContact", new { id = Model.ContactID })" class="btn btn-primary m-b-30">Reply</a>
+                                <a href="@Url.Action("DeleteEmail", "AdminContact", new { id = Model.ContactID })"
+                                   class="btn btn-danger m-b-30"
+                                   onclick="return confirm('Are you sure you want to delete this email?');">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

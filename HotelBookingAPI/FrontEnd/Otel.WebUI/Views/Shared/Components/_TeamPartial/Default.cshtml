@@ -1,0 +1,31 @@
+﻿@model List<ResultStaffDTO>
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Our Team Members</h6>
+            <h1 class="mb-5">Meet <span class="text-primary text-uppercase">Our Team</span></h1>
+        </div>
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="card border-0 rounded shadow overflow-hidden mb-6">
+                        <div class="position-relative">
+                            <img class="img-fluid w-100" src="~/hotel-html-template/img/@item.Link1" alt="@item.Name">
+                            <div class="position-absolute start-50 top-100 translate-middle d-flex justify-content-center">
+                                <a class="btn btn-square btn-primary mx-1" href="@item.Link1" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="@item.Link2" target="_blank"><i class="fab fa-github"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="@item.Link3" target="_blank"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center p-4">
+                            <h5 class="fw-bold mb-0">@item.Name</h5>
+                            <small class="text-muted">@item.Title</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

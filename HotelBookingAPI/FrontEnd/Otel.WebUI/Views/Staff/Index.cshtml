@@ -1,0 +1,39 @@
+﻿@model List<StaffViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Staff Management</h2>
+
+     <div class="mb-3">
+        <a href="@Url.Action("AddStaff", "Staff")" class="btn btn-primary">New Staff</a>
+    </div>
+
+    <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Staff Name</th>
+                <th scope="col">Title</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var staff in Model)
+            {
+                <tr>
+                    <td>@staff.StaffId</td>
+                    <td>@staff.Name</td>
+                    <td>@staff.Title</td>
+                    <td>
+                        <a href="@Url.Action("UpdateStaff", "Staff", new { id = staff.StaffId })" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("DeleteStaff", "Staff", new { id = staff.StaffId })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this staff member?');">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

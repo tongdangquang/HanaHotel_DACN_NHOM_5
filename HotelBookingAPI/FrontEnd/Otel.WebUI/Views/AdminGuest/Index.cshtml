@@ -1,0 +1,41 @@
+﻿@model List<ResultGuestDTO>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Guest Management</h2>
+
+     <div class="mb-3">
+        <a href="@Url.Action("AddGuest", "AdminGuest")" class="btn btn-primary">New Guest</a>
+    </div>
+
+    <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">City</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var guest in Model)
+            {
+                <tr>
+                    <td>@guest.GuestId</td>
+                    <td>@guest.Name</td>
+                    <td>@guest.Surname</td>
+                    <td>@guest.City</td>
+                    <td>
+                        <a href="@Url.Action("UpdateGuest", "AdminGuest", new { id = guest.GuestId })" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("DeleteGuest", "AdminGuest", new { id = guest.GuestId })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this staff member?');">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

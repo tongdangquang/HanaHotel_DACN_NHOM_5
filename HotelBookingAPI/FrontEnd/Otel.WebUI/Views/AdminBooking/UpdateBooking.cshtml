@@ -1,0 +1,43 @@
+﻿@model UpdateBookingDTO
+
+@{
+    ViewData["Title"] = "Update Booking";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<form method="post" asp-action="UpdateBooking" asp-controller="AdminBooking">
+    <input type="hidden" asp-for="BookingId" />
+
+    <div class="form-group">
+        <label asp-for="CheckInDate" class="control-label">Check-In Date</label>
+        <input asp-for="CheckInDate" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CheckOutDate" class="control-label">Check-Out Date</label>
+        <input asp-for="CheckOutDate" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" style="margin-right: 10px;">Status</label>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-warning @(Model.Status == Otel.EntityLayer.Concrete.BookingStatus.Pending ? "active" : "")" style="margin-right: 5px;">
+                <input type="radio" name="Status" value="Pending" @(Model.Status == Otel.EntityLayer.Concrete.BookingStatus.Pending ? "checked" : "") /> Pending
+            </label>
+            <label class="btn btn-success @(Model.Status == Otel.EntityLayer.Concrete.BookingStatus.Confirmed ? "active" : "")" style="margin-right: 5px;">
+                <input type="radio" name="Status" value="Confirmed" @(Model.Status == Otel.EntityLayer.Concrete.BookingStatus.Confirmed ? "checked" : "") /> Confirmed
+            </label>
+            <label class="btn btn-danger @(Model.Status == Otel.EntityLayer.Concrete.BookingStatus.Cancelled ? "active" : "")" style="margin-right: 5px;">
+                <input type="radio" name="Status" value="Cancelled" @(Model.Status == Otel.EntityLayer.Concrete.BookingStatus.Cancelled ? "checked" : "") /> Cancelled
+            </label>
+            <label class="btn btn-primary @(Model.Status == Otel.EntityLayer.Concrete.BookingStatus.Completed ? "active" : "")">
+                <input type="radio" name="Status" value="Completed" @(Model.Status == Otel.EntityLayer.Concrete.BookingStatus.Completed ? "checked" : "") /> Completed
+            </label>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-dark">Update Booking</button>
+    </div>
+</form>

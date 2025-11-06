@@ -1,0 +1,50 @@
+﻿@model List<Otel.EntityLayer.Concrete.AppUser>
+
+@{
+    ViewData["Title"] = "User";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">User Role Management</h2>
+
+    <div class="text-end mb-3">
+        <a href="@Url.Action("CreateUser", "Staff")" class="btn btn-primary">Add New User</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Name</td>
+                        <td>@user.LastName</td>
+                        <td class="text-center">
+                            <a href="@Url.Action("EditRole", "AdminRoleAssign", new { id = user.Id })" class="btn btn-warning btn-sm me-2" title="Edit User Roles">
+                                <i class="fa-solid fa-user-edit"></i> Edit Roles
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No users found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
