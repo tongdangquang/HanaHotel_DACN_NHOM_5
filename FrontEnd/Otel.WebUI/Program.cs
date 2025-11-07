@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -10,6 +10,9 @@ using Otel.WebUI.ValidationRules.AdminGuestValidationRules;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Đọc cấu hình từ appsettings.json
+var urlApi = builder.Configuration["AppSettings:urlAPI"];
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

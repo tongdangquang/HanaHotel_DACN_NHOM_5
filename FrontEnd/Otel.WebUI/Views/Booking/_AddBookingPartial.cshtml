@@ -3,8 +3,8 @@
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h6 class="section-title text-center text-primary text-uppercase">Room Booking</h6>
-            <h1 class="mb-5">Book A <span class="text-primary text-uppercase">Luxury Room</span></h1>
+            <h6 class="section-title text-center text-primary text-uppercase">Đặt phòng</h6>
+            <h1 class="mb-5">Đặt <span class="text-primary text-uppercase">Luxury Room</span></h1>
         </div>
         <div class="row g-5">
             <div class="col-lg-6">
@@ -29,67 +29,68 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" asp-for="Name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
+                                    <input type="text" class="form-control" asp-for="Name" placeholder="Họ và tên">
+                                    <label for="name">Họ và tên</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" asp-for="Email" placeholder="Your Email Address">
-                                    <label for="email">Your Email Address</label>
+                                    <input type="email" class="form-control" asp-for="Email" placeholder="Địa chỉ Email">
+                                    <label for="email">Địa chỉ Email</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating date" id="date3" data-target-input="nearest">
-                                    <input type="date" class="form-control" asp-for="CheckInDate" id="checkin" placeholder="Check-in Date" />
-                                    <label for="checkin">Check-in Date</label>
+                                    <input type="date" class="form-control" asp-for="CheckInDate" id="checkin" placeholder="Ngày nhận phòng" />
+                                    <label for="checkin">Ngày nhận phòng</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating date" id="date4" data-target-input="nearest">
-                                    <input type="date" class="form-control" asp-for="CheckOutDate" id="checkout" placeholder="Check-out Date" />
-                                    <label for="checkout">Check-out Date</label>
+                                    <input type="date" class="form-control" asp-for="CheckOutDate" id="checkout" placeholder="Ngày trả phòng" />
+                                    <label for="checkout">Ngày trả phòng</label>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <select class="form-select" id="select1" asp-for="AdultCount">
-                                        <option value="1">1 Adult</option>
-                                        <option value="2">2 Adults</option>
-                                        <option value="3">3 Adults</option>
+                                        <option value="1">1 người lớn</option>
+                                        <option value="2">2 người lớn</option>
+                                        <option value="3">3 người lớn</option>
                                     </select>
-                                    <label for="select1">Number of Adults</label>
+                                    <label for="select1">Số lượng người lớn</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <select class="form-select" id="select2" asp-for="ChildCount">
-                                        <option value="1">1 Child</option>
-                                        <option value="2">2 Children</option>
-                                        <option value="3">3 Children</option>
+                                        <option value="0">Không có trẻ em</option>
+                                        <option value="1">1 trẻ em</option>
+                                        <option value="2">2 trẻ em</option>
+                                        <option value="3">3 trẻ em</option>
                                     </select>
-                                    <label for="select2">Number of Children</label>
+                                    <label for="select2">Số lượng trẻ em</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
                                     <select class="form-select" id="select3" asp-for="Room">
-                                        <option value="1">1 Room</option>
-                                        <option value="2">2 Rooms</option>
-                                        <option value="3">3 Rooms</option>
+                                        <option value="1">1 phòng</option>
+                                        <option value="2">2 phòng</option>
+                                        <option value="3">3 phòng</option>
                                     </select>
-                                    <label for="select3">Number of Rooms</label>
+                                    <label for="select3">Số lượng phòng</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
                                     <textarea class="form-control" placeholder="Special Requests" asp-for="SpecialRequest" id="message" style="height: 100px"></textarea>
-                                    <label for="message">Special Requests</label>
+                                    <label for="message">Yêu cầu đặc biệt</label>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Make Reservation</button>
+                                <button class="btn btn-primary w-100 py-3" type="submit">Đặt phòng ngay</button>
                             </div>
                         </div>
                     </form>

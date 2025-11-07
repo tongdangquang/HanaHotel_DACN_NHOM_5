@@ -1,13 +1,13 @@
 ﻿@model LoginUserDTO
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Đăng nhập";
     Layout = null;
 
 }
 
 <!DOCTYPE html>
-<html class="h-100" lang="en">
+<html class="h-100" lang="vi">
 
 <head>
     <meta charset="utf-8">
@@ -22,7 +22,7 @@
 <body class="h-100">
 
     <!--*******************
-        Preloader start
+       Trình tải trước khi bắt đầu
     ********************-->
     <div id="preloader">
         <div class="loader">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <!--*******************
-        Preloader end
+        Trình tải trước khi kết thúc
     ********************-->
 
     <div class="login-form-bg h-100">
@@ -43,23 +43,23 @@
                         <div class="card login-form mb-0">
                             <div class="card-body pt-5">
                                 <a class="text-center" href="index.html">
-                                    <h4>Login Otel Panel</h4>
+                                    <h4>Đăng nhập vào bảng điều khiển khách sạn</h4>
                                 </a>
 
                                 <form class="mt-5 mb-5 login-input" method="post">
                                     <div class="form-group">
-                                        <input asp-for="UserName" class="form-control" placeholder="Username" />
+                                        <input asp-for="UserName" class="form-control" placeholder="Tên đăng nhập" />
                                         <span asp-validation-for="UserName" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" asp-for="Password" class="form-control" placeholder="Password" />
+                                        <input type="password" asp-for="Password" class="form-control" placeholder="Mật khẩu" />
                                         <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
-                                    <button class="btn login-form__btn submit w-100" type="submit">Sign Up</button>
+                                    <button class="btn login-form__btn submit w-100" type="submit">Đăng nhập</button>
                                 </form>
 
                                 <div class="text-center mt-3">
-                                    <p class="text-muted">Dont have an account? <a href=@Url.Action("Index", "Register") class="text-primary">Register</a></p>
+                                    <p class="text-muted">Chưa có tài khoản? <a href=@Url.Action("Index", "Register") class="text-primary">Đăng ký ngay</a></p>
                                 </div>
                             </div>
                         </div>
