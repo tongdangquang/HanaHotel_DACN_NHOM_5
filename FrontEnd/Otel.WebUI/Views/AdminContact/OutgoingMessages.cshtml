@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<OutgoingMessagesDTO>
 
 @{
-    ViewData["Title"] = "Outgoing Messages";
+    ViewData["Title"] = "Tin nhắn đã gửi";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
@@ -11,7 +11,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="/AdminContact/Inbox">
-                        <i class="fa fa-arrow-left" aria-hidden="true" style="margin-right: 5px"></i> Inbox
+                        <i class="fa fa-arrow-left" aria-hidden="true" style="margin-right: 5px"></i> Hộp thư đến
                     </a>
                 </li>
             </ol>
@@ -38,11 +38,11 @@
                                                                 <label for="responseCheckbox_@contact.ContactID" class="checkbox-label">
                                                                     @if (contact.IsReplied)
                                                                     {
-                                                                        <span class="badge badge-success">Replied</span>
+                                                                        <span class="badge badge-success">Đã trả lời</span>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span class="badge badge-warning">Pending</span>
+                                                                        <span class="badge badge-warning">Chờ xử lý</span>
                                                                     }
                                                                 </label>
                                                             </div>

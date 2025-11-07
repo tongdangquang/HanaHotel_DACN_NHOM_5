@@ -1,32 +1,31 @@
 ﻿@model CreateGuestDTO
 
 @{
-    ViewData["Title"] = "AddStaff";
+    ViewData["Title"] = "Thêm khách";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
 <form method="post">
 
     <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
+        <label asp-for="Name" class="control-label">Họ và tên đệm</label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Surname" class="control-label"></label>
+        <label asp-for="Surname" class="control-label">Tên</label>
         <input asp-for="Surname" class="form-control" />
         <span asp-validation-for="Surname" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="City" class="control-label"></label>
+        <label asp-for="City" class="control-label">Thành phố</label>
         <input asp-for="City" class="form-control" />
         <span asp-validation-for="City" class="text-danger"></span>
-
     </div>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Add Guest</button>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Thêm khách</button>
     </div>
 </form>

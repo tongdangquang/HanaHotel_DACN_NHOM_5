@@ -1,10 +1,9 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 @await Html.PartialAsync("/Views/AdminLayout/HeadPartial.cshtml")
 
@@ -13,7 +12,6 @@
     @await Html.PartialAsync("/Views/AdminLayout/PreloaderPartial.cshtml")
 
     <div id="main-wrapper">
-
 
         @await Html.PartialAsync("/Views/AdminLayout/NavheaderPartial.cshtml")
 
@@ -28,13 +26,13 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                @RenderBody()
+                                @RenderBody() <!-- Nội dung trang chính sẽ được render tại đây -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- #/ container -->
+            <!-- Kết thúc container -->
         </div>
 
         @await Html.PartialAsync("/Views/AdminLayout/FooterPartial.cshtml")

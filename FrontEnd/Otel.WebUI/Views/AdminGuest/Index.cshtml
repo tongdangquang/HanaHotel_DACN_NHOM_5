@@ -1,25 +1,25 @@
 ﻿@model List<ResultGuestDTO>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý khách";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Guest Management</h2>
+    <h2 class="text-center mb-4">Quản lý khách</h2>
 
-     <div class="mb-3">
-        <a href="@Url.Action("AddGuest", "AdminGuest")" class="btn btn-primary">New Guest</a>
+    <div class="mb-3">
+        <a href="@Url.Action("AddGuest", "AdminGuest")" class="btn btn-primary">Khách mới</a>
     </div>
 
     <table class="table table-hover table-striped">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Surname</th>
-                <th scope="col">City</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Họ và tên đệm</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Thành phố</th>
+                <th scope="col" class="text-center">Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -30,9 +30,9 @@
                     <td>@guest.Name</td>
                     <td>@guest.Surname</td>
                     <td>@guest.City</td>
-                    <td>
-                        <a href="@Url.Action("UpdateGuest", "AdminGuest", new { id = guest.GuestId })" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="@Url.Action("DeleteGuest", "AdminGuest", new { id = guest.GuestId })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this staff member?');">Delete</a>
+                    <td class="text-center">
+                        <a href="@Url.Action("UpdateGuest", "AdminGuest", new { id = guest.GuestId })" class="btn btn-warning btn-sm">Sửa</a>
+                        <a href="@Url.Action("DeleteGuest", "AdminGuest", new { id = guest.GuestId })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa khách này không?');">Xóa</a>
                     </td>
                 </tr>
             }

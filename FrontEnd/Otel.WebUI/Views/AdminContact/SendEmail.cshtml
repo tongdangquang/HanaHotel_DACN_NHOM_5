@@ -1,7 +1,7 @@
 ﻿@model SendMessageDTO
 
 @{
-    ViewData["Title"] = "SendEmail";
+    ViewData["Title"] = "Gửi Email";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
@@ -11,7 +11,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="/AdminContact/Inbox">
-                        <i class="fa fa-arrow-left" aria-hidden="true" style="margin-right : 5px"></i> Inbox
+                        <i class="fa fa-arrow-left" aria-hidden="true" style="margin-right : 5px"></i> Hộp thư đến
                     </a>
                 </li>
             </ol>
@@ -29,23 +29,23 @@
                         <div class="email-right-box">
                             <div class="compose-content mt-5">
                                 <form asp-action="SendEmail" asp-controller="AdminContact" method="post">
-                                    <input type="hidden" asp-for="ContactID"></>
+                                    <input type="hidden" asp-for="ContactID" />
 
                                     <div class="form-group">
-                                        <label asp-for="Email">To:</label>
+                                        <label asp-for="Email">Người nhận:</label>
                                         <input asp-for="Email" class="form-control bg-transparent" readonly />
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="ResponseMessage">Message:</label>
-                                        <textarea asp-for="ResponseMessage" class="textarea_editor form-control bg-light" rows="10" placeholder="Write your message..." required></textarea>
+                                        <label asp-for="ResponseMessage">Nội dung:</label>
+                                        <textarea asp-for="ResponseMessage" class="textarea_editor form-control bg-light" rows="10" placeholder="Nhập nội dung tin nhắn..." required></textarea>
                                         <span asp-validation-for="ResponseMessage" class="text-danger"></span>
                                     </div>
-                                    <div class="text-left m-t-15">
-                                        <button class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" type="submit">
-                                            <i class="fa fa-paper-plane m-r-5"></i> Send
+                                    <div class="text-left mt-3">
+                                        <button class="btn btn-primary mb-3 mt-2 f-s-14 px-4 me-2" type="submit">
+                                            <i class="fa fa-paper-plane me-2"></i> Gửi
                                         </button>
-                                        <a href="@Url.Action("Inbox", "AdminContact")" class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20">
-                                            <i class="ti-close m-r-5 f-s-12"></i> Discard
+                                        <a href="@Url.Action("Inbox", "AdminContact")" class="btn btn-dark mb-3 mt-2 f-s-14 px-4">
+                                            <i class="ti-close me-2 f-s-12"></i> Hủy
                                         </a>
                                     </div>
                                 </form>

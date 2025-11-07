@@ -1,60 +1,60 @@
 ﻿@model AddRoomDTO
 
 @{
-    ViewData["Title"] = "Add Room";
+    ViewData["Title"] = "Thêm phòng";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="RoomNumber" class="control-label"></label>
+        <label asp-for="RoomNumber" class="control-label">Số phòng</label>
         <input asp-for="RoomNumber" class="form-control" />
         <span asp-validation-for="RoomNumber" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="RoomCoverImage" class="control-label"></label>
+        <label asp-for="RoomCoverImage" class="control-label">Ảnh phòng</label>
         <input asp-for="RoomCoverImage" class="form-control" />
         <span asp-validation-for="RoomCoverImage" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Price" class="control-label"></label>
+        <label asp-for="Price" class="control-label">Giá</label>
         <input asp-for="Price" class="form-control" type="number" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Title" class="control-label"></label>
+        <label asp-for="Title" class="control-label">Tiêu đề</label>
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="BedCount" class="control-label"></label>
+        <label asp-for="BedCount" class="control-label">Số giường</label>
         <input asp-for="BedCount" class="form-control" />
         <span asp-validation-for="BedCount" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="BathCount" class="control-label"></label>
+        <label asp-for="BathCount" class="control-label">Số phòng tắm</label>
         <input asp-for="BathCount" class="form-control" />
         <span asp-validation-for="BathCount" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Wifi" class="control-label"></label>
+        <label asp-for="Wifi" class="control-label">Wifi</label>
         <input asp-for="Wifi" class="form-control" />
         <span asp-validation-for="Wifi" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Description" class="control-label"></label>
+        <label asp-for="Description" class="control-label">Mô tả</label>
         <textarea asp-for="Description" class="form-control"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Add Room</button>
+        <button type="submit" class="btn btn-primary">Thêm phòng</button>
     </div>
 </form>

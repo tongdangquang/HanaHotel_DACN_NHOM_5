@@ -6,7 +6,7 @@
 }
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Update About Information</h2>
+    <h2 class="text-center mb-4">Cập nhật thông tin</h2>
 
     @if (Model != null)
     {
@@ -18,41 +18,41 @@
             <input type="hidden" asp-for="CustomerCount" />
 
             <div class="mb-3">
-                <label asp-for="Title1" class="form-label">Primary Title</label>
-                <input asp-for="Title1" class="form-control" placeholder="Enter the primary title">
+                <label asp-for="Title1" class="form-label">Tiêu đề chính</label>
+                <input asp-for="Title1" class="form-control" placeholder="Nhập tiêu đề chính">
                 <span asp-validation-for="Title1" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Title2" class="form-label">Secondary Title</label>
-                <input asp-for="Title2" class="form-control" placeholder="Enter the secondary title">
+                <label asp-for="Title2" class="form-label">Tiêu đề phụ</label>
+                <input asp-for="Title2" class="form-control" placeholder="Nhập tiêu đề phụ">
                 <span asp-validation-for="Title2" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Content" class="form-label">Content</label>
-                <textarea asp-for="Content" class="form-control" rows="5" placeholder="Enter content about the hotel"></textarea>
+                <label asp-for="Content" class="form-label">Nội dung</label>
+                <textarea asp-for="Content" class="form-control" rows="5" placeholder="Nhập nội dung về khách sạn"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
 
             <div class="d-grid gap-2 mt-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
             </div>
         </form>
 
         <div class="row mt-4">
             <div class="col-md-4 mb-3">
-                <label asp-for="RoomCount" class="form-label">Room Count</label>
+                <label asp-for="RoomCount" class="form-label">Số lượng phòng</label>
                 <input asp-for="RoomCount" class="form-control" type="number" readonly>
             </div>
 
             <div class="col-md-4 mb-3">
-                <label asp-for="StaffCount" class="form-label">Staff Count</label>
+                <label asp-for="StaffCount" class="form-label">Số lượng nhân viên</label>
                 <input asp-for="StaffCount" class="form-control" type="number" readonly>
             </div>
 
             <div class="col-md-4 mb-3">
-                <label asp-for="CustomerCount" class="form-label">Customer Count</label>
+                <label asp-for="CustomerCount" class="form-label">Số lượng khách hàng</label>
                 <input asp-for="CustomerCount" class="form-control" type="number" readonly>
             </div>
         </div>
@@ -62,22 +62,22 @@
         <form asp-action="Index" asp-controller="AdminAbout" method="post" class="p-4 border rounded shadow-sm bg-light">
 
             <div class="mb-3">
-                <label for="Title1" class="form-label">Primary Title</label>
-                <input type="text" id="Title1" name="Title1" class="form-control" placeholder="Enter the primary title">
+                <label for="Title1" class="form-label">Tiêu đề chính</label>
+                <input type="text" id="Title1" name="Title1" class="form-control" placeholder="Nhập tiêu đề chính">
             </div>
 
             <div class="mb-3">
-                <label for="Title2" class="form-label">Secondary Title</label>
-                <input type="text" id="Title2" name="Title2" class="form-control" placeholder="Enter the secondary title">
+                <label for="Title2" class="form-label">Tiêu đề phụ</label>
+                <input type="text" id="Title2" name="Title2" class="form-control" placeholder="Nhập tiêu đề phụ">
             </div>
 
             <div class="mb-3">
-                <label for="Content" class="form-label">Content</label>
-                <textarea id="Content" name="Content" class="form-control" rows="5" placeholder="Enter content about the hotel"></textarea>
+                <label for="Content" class="form-label">Nội dung</label>
+                <textarea id="Content" name="Content" class="form-control" rows="5" placeholder="Nhập nội dung về khách sạn"></textarea>
             </div>
 
             <div class="d-grid gap-2 mt-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
             </div>
         </form>
     }
