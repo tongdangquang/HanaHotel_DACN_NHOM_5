@@ -55,7 +55,7 @@ namespace Otel.WebUI.Controllers
             var user = await _userManager.FindByIdAsync(updateUserDTO.Id.ToString());
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "User not found.");
+                ModelState.AddModelError(string.Empty, "Không tìm thấy người dùng.");
                 ViewBag.Items = await LoadWorkLocations();
                 return View(updateUserDTO);
             }

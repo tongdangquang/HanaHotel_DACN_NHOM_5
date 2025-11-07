@@ -56,7 +56,7 @@ namespace Otel.WebUI.Controllers
 
             if (!existingBookingResponse.IsSuccessStatusCode)
             {
-                ModelState.AddModelError("", "Unable to retrieve the booking details.");
+                ModelState.AddModelError("", "Không thể lấy thông tin chi tiết của đơn đặt phòng.");
                 return View(updateBookingDTO);
             }
 
@@ -74,7 +74,7 @@ namespace Otel.WebUI.Controllers
             if (updateResponse.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError("", "Unable to update the booking. Please try again.");
+            ModelState.AddModelError("", "Không thể cập nhật đơn đặt phòng. Vui lòng thử lại.");
             return View(updateBookingDTO);
         }
 
@@ -87,7 +87,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while deleting the staff.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi xóa đơn đặt phòng.");
             return View();
         }
     }

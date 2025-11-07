@@ -56,7 +56,7 @@ namespace Otel.WebUI.Controllers
 
             if (role == null)
             {
-                TempData["Error"] = "Role not found.";
+                TempData["Error"] = "Không tìm thấy vai trò.";
                 return RedirectToAction("Index");
             }
 
@@ -73,7 +73,7 @@ namespace Otel.WebUI.Controllers
 
                 if (role == null)
                 {
-                    TempData["Error"] = "Role not found.";
+                    TempData["Error"] = "Không tìm thấy vai trò.";
                     return RedirectToAction("Index");
                 }
 
@@ -97,16 +97,16 @@ namespace Otel.WebUI.Controllers
 
             if (role == null)
             {
-                TempData["Error"] = "Role not found.";
+                TempData["Error"] = "Không tìm thấy vai trò.";
                 return RedirectToAction("Index");
             }
 
             var result = await _roleManager.DeleteAsync(role);
 
             if (!result.Succeeded)
-                TempData["Error"] = "Error deleting role. Please try again.";
+                TempData["Error"] = "Lỗi khi xóa vai trò. Vui lòng thử lại.";
             else
-                TempData["Success"] = "Role deleted successfully.";
+                TempData["Success"] = "Xóa vai trò thành công.";
 
             return RedirectToAction("Index");
         }

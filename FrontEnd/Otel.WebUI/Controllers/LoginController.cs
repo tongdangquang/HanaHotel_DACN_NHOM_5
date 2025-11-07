@@ -34,7 +34,7 @@ namespace Otel.WebUI.Controllers
                 return RedirectToAction("Index", "AdminDashboard");
             else
             {
-                ModelState.AddModelError("", "Invalid Login Attempt");
+                ModelState.AddModelError("", "Đăng nhập không hợp lệ");
                 return View(loginUserDTO);
             }
         }

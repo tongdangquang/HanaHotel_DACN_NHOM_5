@@ -72,7 +72,7 @@ namespace Otel.WebUI.Controllers
             }
 
             // PUT isteği başarısızsa, hata mesajı ekle
-            ModelState.AddModelError(string.Empty, "An error occurred while updating the about.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi cập nhật thông tin giới thiệu.");
             return View(updateAboutDTO);
         }
 

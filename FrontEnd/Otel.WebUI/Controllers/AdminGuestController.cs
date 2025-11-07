@@ -52,7 +52,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while adding the guest.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi thêm khách mới.");
             return View();
         }
 
@@ -70,11 +70,11 @@ namespace Otel.WebUI.Controllers
                 if (values != null)
                     return View(values);
                 else
-                    ModelState.AddModelError(string.Empty, "No guest data found.");
+                    ModelState.AddModelError(string.Empty, "Không tìm thấy dữ liệu khách hàng.");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while retrieving guest data.");
+                ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi lấy dữ liệu khách hàng.");
             }
 
             return View();
@@ -92,7 +92,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while updating the guest.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi cập nhật thông tin khách hàng.");
             return View();
         }
 
@@ -104,7 +104,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while deleting the guest.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi xóa khách hàng.");
             return View();
         }
     }

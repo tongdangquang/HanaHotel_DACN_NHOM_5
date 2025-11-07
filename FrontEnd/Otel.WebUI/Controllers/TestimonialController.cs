@@ -30,7 +30,7 @@ namespace Otel.WebUI.Controllers
                 return View(values);
             }
 
-            ModelState.AddModelError(string.Empty, "An error occurred while retrieving testimonials.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi lấy danh sách đánh giá.");
             return View(new List<ResultTestimonialDTO>());
         }
 
@@ -52,7 +52,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while adding the testimonial.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi thêm đánh giá.");
             return View(model);
         }
 
@@ -65,7 +65,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while deleting the testimonial.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi xóa đánh giá.");
             return RedirectToAction("Index");
         }
 
@@ -83,11 +83,11 @@ namespace Otel.WebUI.Controllers
                 if (values != null)
                     return View(values);
 
-                ModelState.AddModelError(string.Empty, "No testimonial data found.");
+                ModelState.AddModelError(string.Empty, "Không tìm thấy dữ liệu đánh giá.");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while retrieving testimonial data.");
+                ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi lấy dữ liệu đánh giá.");
             }
 
             return View();
@@ -105,7 +105,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while updating the testimonial.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi cập nhật đánh giá.");
             return View(model);
         }
     }

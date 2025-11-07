@@ -30,7 +30,7 @@ namespace Otel.WebUI.Controllers
                 var values = JsonConvert.DeserializeObject<List<ResultWorkLocationDTO>>(jsonData);
                 return View(values);
             }
-            ModelState.AddModelError(string.Empty, "An error occurred while retrieving work locations.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi lấy danh sách địa điểm làm việc.");
             return View(new List<ResultWorkLocationDTO>());
         }
 
@@ -55,7 +55,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while adding the work location.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi thêm địa điểm làm việc.");
             return View(model);
         }
 
@@ -73,11 +73,11 @@ namespace Otel.WebUI.Controllers
                 if (values != null)
                     return View(values);
 
-                ModelState.AddModelError(string.Empty, "No work location data found.");
+                ModelState.AddModelError(string.Empty, "Không tìm thấy dữ liệu địa điểm làm việc.");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while retrieving work location data.");
+                ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi lấy dữ liệu địa điểm làm việc.");
             }
 
             return View();
@@ -98,7 +98,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while updating the work location.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi cập nhật địa điểm làm việc.");
             return View(updateWorkLocationDTO);
         }
 
@@ -111,7 +111,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while deleting the work location.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi xóa địa điểm làm việc.");
             return RedirectToAction("Index");
         }
     }

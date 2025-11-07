@@ -42,7 +42,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> ReadEmail([FromRoute] string id)
         {
             if (string.IsNullOrEmpty(id))
-                return BadRequest("Invalid email ID.");
+                return BadRequest("ID email không hợp lệ.");
 
             var client = _httpClientFactory.CreateClient();
 
@@ -50,7 +50,7 @@ namespace Otel.WebUI.Controllers
             var responseMessage = await client.GetAsync($"{_apiUrl}/api/Contact/{id}");
 
             if (!responseMessage.IsSuccessStatusCode)
-                return NotFound("Email not found.");
+                return NotFound("Không tìm thấy email.");
 
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var value = JsonConvert.DeserializeObject<DetailContactDTO>(jsonData);
@@ -66,7 +66,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Inbox");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while deleting the email.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi xóa email.");
             return View();
         }
 
@@ -89,14 +89,14 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> SendEmail([FromRoute] string id)
         {
             if (string.IsNullOrEmpty(id))
-                return BadRequest("Invalid email ID.");
+                return BadRequest("ID email không hợp lệ.");
 
             var client = _httpClientFactory.CreateClient();
 
             var responseMessage = await client.GetAsync($"{_apiUrl}/api/Contact/{id}");
 
             if (!responseMessage.IsSuccessStatusCode)
-                return NotFound("Email not found.");
+                return NotFound("Không tìm thấy email.");
 
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var value = JsonConvert.DeserializeObject<SendMessageDTO>(jsonData);
@@ -109,7 +109,7 @@ namespace Otel.WebUI.Controllers
         {
             if (sendMessageDTO == null || sendMessageDTO.ContactID <= 0)
             {
-                ModelState.AddModelError(string.Empty, "Invalid message data.");
+                ModelState.AddModelError(string.Empty, "Dữ liệu phản hồi không hợp lệ.");
                 return View(sendMessageDTO);
             }
 
@@ -119,7 +119,7 @@ namespace Otel.WebUI.Controllers
 
             if (!responseMessage.IsSuccessStatusCode)
             {
-                return NotFound("Email not found.");
+                return NotFound("Không tìm thấy email");
             }
 
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -127,7 +127,7 @@ namespace Otel.WebUI.Controllers
 
             if (contactEntity == null)
             {
-                ModelState.AddModelError(string.Empty, "Unable to retrieve contact information.");
+                ModelState.AddModelError(string.Empty, "Không thể lấy thông tin liên hệ.");
                 return View(sendMessageDTO);
             }
 
@@ -144,14 +144,14 @@ namespace Otel.WebUI.Controllers
             {
                 var mimeMessage = new MimeMessage();
                 mimeMessage.From.Add(new MailboxAddress("Hasan Uslu - CEO OF OTELIER", "dumenmail123@gmail.com"));
-                mimeMessage.To.Add(new MailboxAddress("Guest", contactEntity.Email));
+                mimeMessage.To.Add(new MailboxAddress("Khách hàng", contactEntity.Email));
 
                 var bodyBuilder = new BodyBuilder
                 {
                     TextBody = sendMessageDTO.ResponseMessage
                 };
                 mimeMessage.Body = bodyBuilder.ToMessageBody();
-                mimeMessage.Subject = "About the email you sent";
+                mimeMessage.Subject = "Phản hồi về email bạn đã gửi";
 
                 using (var smtpClient = new SmtpClient())
                 {
@@ -164,7 +164,7 @@ namespace Otel.WebUI.Controllers
                 return RedirectToAction("Inbox");
             }
 
-            ModelState.AddModelError(string.Empty, "An error occurred while sending the email.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi gửi phản hồi.");
             return View(sendMessageDTO);
         }
 

@@ -52,7 +52,7 @@ namespace Otel.WebUI.Controllers
                 if (!ModelState.IsValid)
                     return View(contactDTO);
 
-                ModelState.AddModelError("", "An error occurred while sending the contact form.");
+                ModelState.AddModelError("", "Đã xảy ra lỗi khi gửi biểu mẫu liên hệ.");
                 return View(contactDTO);
             }
 

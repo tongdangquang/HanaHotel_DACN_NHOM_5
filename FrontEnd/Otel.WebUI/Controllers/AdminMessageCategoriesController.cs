@@ -33,11 +33,11 @@ namespace Otel.WebUI.Controllers
                 if (categories != null)
                     return View(categories);
                 else
-                    ModelState.AddModelError(string.Empty, "Message categories not found.");
+                    ModelState.AddModelError(string.Empty, "Không tìm thấy danh mục tin nhắn.");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Error while fetching message categories.");
+                ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi tải danh mục tin nhắn.");
             }
 
             return View();
@@ -64,7 +64,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "Error while adding the message category.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi thêm danh mục tin nhắn.");
             return View(model);
         }
 
@@ -82,11 +82,11 @@ namespace Otel.WebUI.Controllers
                 if (category != null)
                     return View(category);
 
-                ModelState.AddModelError(string.Empty, "Message category not found.");
+                ModelState.AddModelError(string.Empty, "Không tìm thấy danh mục tin nhắn.");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Error while fetching the message category.");
+                ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi tải danh mục tin nhắn.");
             }
 
             return View();
@@ -107,7 +107,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "Error while updating the message category.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi cập nhật danh mục tin nhắn.");
             return View(model);
         }
 
@@ -120,7 +120,7 @@ namespace Otel.WebUI.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, "Error while deleting the message category.");
+            ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi khi xóa danh mục tin nhắn.");
             return RedirectToAction("Index");
         }
     }
