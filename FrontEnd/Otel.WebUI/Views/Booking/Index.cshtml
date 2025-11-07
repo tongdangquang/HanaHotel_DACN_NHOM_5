@@ -4,7 +4,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 @await Component.InvokeAsync("_HeadPartial")
 
@@ -18,7 +18,9 @@
         @await Html.PartialAsync("_AddBookingPartial.cshtml")
         @await Component.InvokeAsync("_FooterPartial")
 
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" title="Lên đầu trang">
+            <i class="bi bi-arrow-up"></i>
+        </a>
     </div>
     @await Component.InvokeAsync("_ScriptsPartial")
 </body>

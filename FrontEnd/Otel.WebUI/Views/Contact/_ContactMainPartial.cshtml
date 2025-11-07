@@ -3,15 +3,15 @@
 <div class="container-xxl py-5 bg-light">
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h6 class="section-title text-center text-primary text-uppercase mb-3">Contact Us</h6>
-            <h1 class="display-5 mb-5">Get In Touch For Any <span class="text-primary text-uppercase">Question</span></h1>
+            <h6 class="section-title text-center text-primary text-uppercase mb-3">Liên hệ với chúng tôi</h6>
+            <h1 class="display-5 mb-5">Hãy <span class="text-primary text-uppercase">Liên lạc</span> Nếu bạn có bất kỳ câu hỏi nào</h1>
         </div>
         <div class="row g-5">
             <div class="col-lg-4">
                 <div class="d-flex align-items-start">
                     <i class="fa fa-envelope text-primary display-5 me-3"></i>
                     <div>
-                        <h5 class="section-title text-start text-primary text-uppercase">Booking</h5>
+                        <h5 class="section-title text-start text-primary text-uppercase">Đặt phòng</h5>
                         <p class="mb-0">book@example.com</p>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                 <div class="d-flex align-items-start">
                     <i class="fa fa-envelope text-primary display-5 me-3"></i>
                     <div>
-                        <h5 class="section-title text-start text-primary text-uppercase">General</h5>
+                        <h5 class="section-title text-start text-primary text-uppercase">Chung</h5>
                         <p class="mb-0">info@example.com</p>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="d-flex align-items-start">
                     <i class="fa fa-envelope text-primary display-5 me-3"></i>
                     <div>
-                        <h5 class="section-title text-start text-primary text-uppercase">Technical Support</h5>
+                        <h5 class="section-title text-start text-primary text-uppercase">Hỗ Trợ Kỹ Thuật</h5>
                         <p class="mb-0">tech@example.com</p>
                     </div>
                 </div>
@@ -50,22 +50,22 @@
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name" asp-for="Name">
-                                    <label for="name">Your Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Họ và tên của bạn" asp-for="Name">
+                                    <label for="name">Họ và tên </label>
                                     <span asp-validation-for="Name" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email" asp-for="Email">
-                                    <label for="email">Your Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Email của bạn" asp-for="Email">
+                                    <label for="email">Email</label>
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject" asp-for="Subject">
-                                    <label for="subject">Subject</label>
+                                    <input type="text" class="form-control" id="subject" placeholder="Chủ đề" asp-for="Subject">
+                                    <label for="subject">Chủ đề</label>
                                     <span asp-validation-for="Subject" class="text-danger"></span>
                                 </div>
                             </div>
@@ -77,20 +77,20 @@
                                     new SelectListItem { Text = "Select a category", Value = "", Disabled = true, Selected = true }
                                     }.Concat((List<SelectListItem>)ViewBag.Categories),
                                              new { @class = "form-control", id = "category" })
-                                    <label for="category">Category</label>
+                                    <label for="category">Danh mục</label>
                                     <span asp-validation-for="MessageCategoryId" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px" asp-for="Message"></textarea>
-                                    <label for="message">Your Message</label>
+                                    <textarea class="form-control" placeholder="Nhạp tin nhắn của bạn tại đây" id="message" style="height: 150px" asp-for="Message"></textarea>
+                                    <label for="message">Nội dung tin nhắn</label>
                                     <span asp-validation-for="Message" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                                <button class="btn btn-primary w-100 py-3" type="submit">Gửi tin nhắn</button>
                             </div>
                         </div>
                     </form>

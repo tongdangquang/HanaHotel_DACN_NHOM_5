@@ -2,29 +2,29 @@
 
 
 @{
-    ViewData["Title"] = "User";
+    ViewData["Title"] = "Người dùng";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">User Management</h2>
+    <h2 class="text-center mb-4">Quản lý người dùng</h2>
 
     <div class="mb-3">
-        <a href="@Url.Action("Index", "Register")" class="btn btn-primary">New user</a>
+        <a href="@Url.Action("Index", "Register")" class="btn btn-primary">Thêm người dùng mới</a>
     </div>
 
     <table class="table table-hover table-striped">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">City</th>
+                <th scope="col">Mã người dùng</th>
+                <th scope="col">Họ</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Thành phố</th>
                 <th scope="col">Email</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Work Location</th>
-                <th scope="col">Deparment</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Nơi làm việc</th>
+                <th scope="col">Phòng ban</th>
+                <th scope="col">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -40,8 +40,8 @@
                     <td>@(user.WorkLocation!.WorkLocationCityName)/@(user.WorkLocation!.WorkLocationCountry) </td>
                     <td>@user.Department</td>
                     <td>
-                        <a href="@Url.Action("UpdateUser", "AdminUser", new { id = user.Id })" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="@Url.Action("DeleteUser", "AdminUser", new { id = user.Id })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user member?');">Delete</a>
+                        <a href="@Url.Action("UpdateUser", "AdminUser", new { id = user.Id })" class="btn btn-warning btn-sm">Sửa</a>
+                        <a href="@Url.Action("DeleteUser", "AdminUser", new { id = user.Id })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');">Xóa</a>
                     </td>
                 </tr>
             }

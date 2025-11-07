@@ -2,32 +2,33 @@
 @model CreateServiceDTO
 
 @{
-    ViewData["Title"] = "AddService";
+    ViewData["Title"] = "Thêm dịch vụ";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
 <form method="post">
 
     <div class="form-group">
-        <label asp-for="ServiceIcon" class="control-label"></label>
-        <input asp-for="ServiceIcon" class="form-control" />
+        <label asp-for="ServiceIcon" class="control-label">Biểu tượng dịch vụ</label>
+        <input asp-for="ServiceIcon" class="form-control" placeholder="Nhập biểu tượng (ví dụ: fa fa-spa)" />
         <span asp-validation-for="ServiceIcon" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Title" class="control-label"></label>
-        <input asp-for="Title" class="form-control" />
+        <label asp-for="Title" class="control-label">Tên dịch vụ</label>
+        <input asp-for="Title" class="form-control" placeholder="Nhập tên dịch vụ"/>
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Description" class="control-label"></label>
-        <input asp-for="Description" class="form-control" />
+        <label asp-for="Description" class="control-label">Mô tả</label>
+        <input asp-for="Description" class="form-control" placeholder="Nhập mô tả ngắn về dịch vụ" />
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Add Service</button>
+        <button type="submit" class="btn btn-primary">Thêm dịch vụ</button>
+        <a asp-action="Index" asp-controller="Service" class="btn btn-secondary">Quay lại</a>
     </div>
 </form>
 

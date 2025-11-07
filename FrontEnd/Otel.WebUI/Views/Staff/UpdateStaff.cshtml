@@ -3,41 +3,46 @@
 
 
 @{
-    ViewData["Title"] = "UpdateStaff";
+    ViewData["Title"] = "Cập nhật nhân viên";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
+<h2 class="text-center mb-4">Cập nhật thông tin nhân viên</h2>
 
 <form method="post">
        <input type="hidden" asp-for="StaffId"/>
 
     <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
+        <label asp-for="Name" class="control-label">Họ và tên</label>
+        <input asp-for="Name" class="form-control" placeholder="Nhập họ và tên nhân viên" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Title" class="control-label"></label>
-        <input asp-for="Title" class="form-control" />
+        <label asp-for="Title" class="control-label">Chức vụ</label>
+        <input asp-for="Title" class="form-control" placeholder="Nhập chức vụ"/>
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Link1" class="control-label"></label>
-        <input asp-for="Link1" class="form-control" />
+        <label asp-for="Link1" class="control-label">Liên kết 1 (Facebook, LinkedIn, ...)</label>
+        <input asp-for="Link1" class="form-control" placeholder="Nhập liên kết mạng xã hội 1" />
     </div>
 
     <div class="form-group">
-        <label asp-for="Link2" class="control-label"></label>
-        <input asp-for="Link2" class="form-control" />
+        <label asp-for="Link2" class="control-label">Liên kết 2</label>
+        <input asp-for="Link2" class="form-control" placeholder="Nhập liên kết mạng xã hội 2" />
     </div>
 
     <div class="form-group">
-        <label asp-for="Link3" class="control-label"></label>
-        <input asp-for="Link3" class="form-control" />
+        <label asp-for="Link3" class="control-label">Liên kết 3</label>
+        <input asp-for="Link3" class="form-control" placeholder="Nhập liên kết mạng xã hội 3" />
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Update Staff</button>
+        <button type="submit" class="btn btn-primary">Cập nhật </button>
+        <a href="@Url.Action("Index", "Staff")" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+
     </div>
 </form> 

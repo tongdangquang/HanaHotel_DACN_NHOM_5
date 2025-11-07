@@ -1,24 +1,24 @@
 ﻿@model List<StaffViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý nhân viên";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Staff Management</h2>
+    <h2 class="text-center mb-4">Quản lý nhân viên</h2>
 
      <div class="mb-3">
-        <a href="@Url.Action("AddStaff", "Staff")" class="btn btn-primary">New Staff</a>
+        <a href="@Url.Action("AddStaff", "Staff")" class="btn btn-primary">Thêm nhân viên mới</a>
     </div>
 
     <table class="table table-hover table-striped">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Staff Name</th>
-                <th scope="col">Title</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Họ và tên</th>
+                <th scope="col">Chức vụ</th>
+                <th scope="col">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -29,8 +29,8 @@
                     <td>@staff.Name</td>
                     <td>@staff.Title</td>
                     <td>
-                        <a href="@Url.Action("UpdateStaff", "Staff", new { id = staff.StaffId })" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="@Url.Action("DeleteStaff", "Staff", new { id = staff.StaffId })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this staff member?');">Delete</a>
+                        <a href="@Url.Action("UpdateStaff", "Staff", new { id = staff.StaffId })" class="btn btn-warning btn-sm">Sửa</a>
+                        <a href="@Url.Action("DeleteStaff", "Staff", new { id = staff.StaffId })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chăc chắn muốn xóa nhân viên này?');">Xóa</a>
                     </td>
                 </tr>
             }
