@@ -156,7 +156,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("AboutId");
 
-                    b.ToTable("Abouts");
+                    b.ToTable("Abouts", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.AppRole", b =>
@@ -319,7 +319,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("BookingId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.Contact", b =>
@@ -365,7 +365,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasIndex("MessageCategoryId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.Guest", b =>
@@ -390,7 +390,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("GuestId");
 
-                    b.ToTable("Guests");
+                    b.ToTable("Guests", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.MessageCategory", b =>
@@ -407,7 +407,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("MessageCategoryId");
 
-                    b.ToTable("MessageCategories");
+                    b.ToTable("MessageCategories", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.Room", b =>
@@ -451,7 +451,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("RoomId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.Service", b =>
@@ -476,7 +476,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("ServiceId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.Staff", b =>
@@ -509,7 +509,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("StaffId");
 
-                    b.ToTable("Staffs");
+                    b.ToTable("Staffs", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.Subscribe", b =>
@@ -526,7 +526,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("SubscribeId");
 
-                    b.ToTable("Subscribes");
+                    b.ToTable("Subscribes", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.Testimonial", b =>
@@ -555,7 +555,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("TestimonialId");
 
-                    b.ToTable("Testimonials");
+                    b.ToTable("Testimonials", (string)null);
                 });
 
             modelBuilder.Entity("Otel.EntityLayer.Concrete.WorkLocation", b =>
@@ -576,7 +576,7 @@ namespace Otel.DataAccessLayer.Migrations
 
                     b.HasKey("WorkLocationId");
 
-                    b.ToTable("WorkLocations");
+                    b.ToTable("WorkLocations", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

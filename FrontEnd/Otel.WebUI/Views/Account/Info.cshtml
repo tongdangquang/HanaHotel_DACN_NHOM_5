@@ -1,0 +1,66 @@
+﻿@model Otel.EntityLayer.Concrete.AppUser
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Thông tin tài khoản";
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Default" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thông tin tài khoản</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h4 class="mb-0">Thông tin tài khoản</h4>
+        </div>
+
+        <div class="card-body">
+            <dl class="row mb-3">
+                <dt class="col-sm-3">Tên đăng nhập</dt>
+                <dd class="col-sm-9">@Model.UserName</dd>
+
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+
+                <dt class="col-sm-3">Họ & tên</dt>
+                <dd class="col-sm-9">@($"{Model.Name} {Model.LastName}")</dd>
+
+                <dt class="col-sm-3">Thành phố</dt>
+                <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.City) ? Model.City : "-")</dd>
+
+                <dt class="col-sm-3">Bộ phận</dt>
+                <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.Department) ? Model.Department : "-")</dd>
+
+                <dt class="col-sm-3">Địa điểm làm việc</dt>
+                <dd class="col-sm-9">
+                    @if (Model.WorkLocation is not null)
+                    {
+                        @($"{Model.WorkLocation.WorkLocationCityName}, {Model.WorkLocation.WorkLocationCountry}")
+                    }
+                    else
+                    {
+                        @("-")
+                    }
+                </dd>
+
+                <dt class="col-sm-3">Vai trò</dt>
+                <dd class="col-sm-9">@((string?)ViewBag.Role ?? "-")</dd>
+            </dl>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+                <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger"
+                   onclick="return confirm('Bạn có chắc muốn đăng xuất?');">Đăng xuất</a>
+
+                <!-- If you have an edit page that accepts user id -->
+                <a asp-controller="AdminUser" asp-action="UpdateUser" asp-route-id="@Model.Id" class="btn btn-primary">Chỉnh sửa thông tin</a>
+
+                <a asp-controller="Default" asp-action="Index" class="btn btn-secondary ms-auto">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>

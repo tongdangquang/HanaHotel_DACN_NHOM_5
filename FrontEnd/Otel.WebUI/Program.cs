@@ -36,6 +36,18 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 });
 
+// Register session support: distributed cache + session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(1);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+// Make HttpContext accessible in services/views
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
@@ -58,6 +70,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Session must be enabled in the pipeline before you access HttpContext.Session in controllers/views
+app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
