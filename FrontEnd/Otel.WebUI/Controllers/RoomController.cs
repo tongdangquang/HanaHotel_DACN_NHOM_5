@@ -1,24 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization; // thêm namespace này
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Otel.WebUI.DTOs.RoomDTO;
-using Microsoft.AspNetCore.Authorization; // thêm namespace này
+using Microsoft.Extensions.Options;
+using Otel.WebUI.Models;
 
 namespace Otel.WebUI.Controllers
 {
     public class RoomController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+		private readonly string _apiUrl;
 
-        public RoomController(IHttpClientFactory httpClientFactory)
+		public RoomController(IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
         {
             _httpClientFactory = httpClientFactory;
-        }
+            _apiUrl = appSettings.Value.urlAPI;
+		}
 
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7250/api/Room");
+            var response = await client.GetAsync($"{_apiUrl}/api/Room");
 
             if (!response.IsSuccessStatusCode)
                 return NotFound();
@@ -34,7 +38,7 @@ namespace Otel.WebUI.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7250/api/Room/{id}");
+            var response = await client.GetAsync($"{_apiUrl}/api/Room/{id}");
 
             if (!response.IsSuccessStatusCode)
                 return NotFound();
