@@ -76,13 +76,17 @@
                                     </div>
 
                                     <div class="form-group">
+                                        @{
+                                            var items = ViewBag.Items as List<SelectListItem> ?? new List<SelectListItem>();
+                                        }
+
                                         @Html.DropDownListFor(x => x.WorkLocationId,
                                                  new List<SelectListItem>
                                         {
                                         new SelectListItem { Text = "Chọn quốc gia làm việc", Value = "", Disabled = true, Selected = true }
-                                        }.Concat((List<SelectListItem>)ViewBag.Items),
+                                        }.Concat(items),
                                                  new { @class = "form-control", id = "workLocation" })
-                                        <span asp-validation-for="WorkLocationId" class="text-danger"></span>
+
                                     </div>
 
                                     <div class="form-group">

@@ -37,49 +37,58 @@ namespace Otel.WebUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Items = await LoadWorkLocations();
+                ViewBag.Items = await LoadWorkLocations(); // load lại dropdown nếu model không hợp lệ
                 return View(createUserDTO);
             }
 
             var appUser = new AppUser
             {
                 Name = createUserDTO.Name,
-                Email = createUserDTO.Email,
                 LastName = createUserDTO.LastName,
                 UserName = createUserDTO.UserName,
+                Email = createUserDTO.Email,
                 PhoneNumber = createUserDTO.PhoneNumber,
                 City = createUserDTO.City,
                 Department = createUserDTO.Department,
-                WorkLocationId = createUserDTO.WorkLocationId,
+                WorkLocationId = createUserDTO.WorkLocationId
             };
 
             var result = await _userManager.CreateAsync(appUser, createUserDTO.Password);
 
             if (result.Succeeded)
+            {
+                TempData["Success"] = "Đăng ký thành công! Vui lòng đăng nhập.";
                 return RedirectToAction("Index", "Login");
+            }
 
             foreach (var error in result.Errors)
+            {
                 ModelState.AddModelError("", error.Description);
+            }
 
-            await LoadWorkLocations();
+            ViewBag.Items = await LoadWorkLocations();
             return View(createUserDTO);
         }
 
+        // Helper: load danh sách WorkLocations
         private async Task<List<SelectListItem>> LoadWorkLocations()
         {
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync($"{_apiUrl}/api/WorkLocation");
+
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultWorkLocationDTO>>(jsonData);
-                return values!.Select(item => new SelectListItem
+
+                return values?.Select(item => new SelectListItem
                 {
                     Text = item.WorkLocationCityName,
                     Value = item.WorkLocationId.ToString()
-                }).ToList();
+                }).ToList() ?? new List<SelectListItem>();
             }
-            return [];
+
+            return new List<SelectListItem>();
         }
 
     }
