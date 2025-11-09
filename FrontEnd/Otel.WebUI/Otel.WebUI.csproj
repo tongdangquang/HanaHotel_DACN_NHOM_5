@@ -18,6 +18,7 @@
   <ItemGroup>
     <Content Remove="ViewComponents\Dashboard\XemChiTietPhong.cshtml" />
     <Content Remove="Views\Shared\Components\_OurRoomsPartial\Index.cshtml" />
+    <Content Remove="wwwroot\hotel-html-template\img\tesimonial_6.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
