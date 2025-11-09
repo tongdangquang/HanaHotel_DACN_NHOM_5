@@ -13,7 +13,7 @@ namespace RapidApiConsume.Controllers
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query={cityName}"),
+                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/Hotels/searchDestination?query={cityName}"),
                 Headers =
             {
                 { "x-rapidapi-key", "829c4ea854msh9bb0e6eda455a44p153742jsn4eb4c970dc8d" },

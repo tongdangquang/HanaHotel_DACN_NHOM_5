@@ -21,7 +21,7 @@
             public string roundtrip { get; set; }
             public string lc { get; set; }
             public string city_ufi { get; set; }
-            public int hotels { get; set; }
+            public int Hotels { get; set; }
             public string region { get; set; }
 
         }

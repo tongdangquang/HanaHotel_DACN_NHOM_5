@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "ADMIN";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid mt-3">
+
+    @await Component.InvokeAsync("_DashboardWidgetPartial")
+    @await Component.InvokeAsync("_DashboardStaffPartial")
+    @await Component.InvokeAsync("_DashboardContactPartial")
+    @await Component.InvokeAsync("_DashboardSocialPartial")
+
+</div>
+

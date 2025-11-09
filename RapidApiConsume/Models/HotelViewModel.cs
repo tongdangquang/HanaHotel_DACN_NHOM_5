@@ -9,7 +9,7 @@
 
         public class Data
         {
-            public Hotel[] hotels { get; set; }
+            public Hotel[] Hotels { get; set; }
         }
 
         public class Hotel

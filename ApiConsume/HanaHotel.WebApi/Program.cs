@@ -1,0 +1,92 @@
+﻿using HanaHotel.BusinessLayer.Abstract;
+using HanaHotel.BusinessLayer.Concrete;
+using HanaHotel.DataAccessLayer.Abstract;
+using HanaHotel.DataAccessLayer.Concrete;
+using HanaHotel.DataAccessLayer.EntityFramework;
+using System.Reflection;
+using System.Text.Json.Serialization;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddDbContext<DataContext>();
+
+// DataAccessLayer
+builder.Services.AddScoped<IStaffDal, EfStaffDAL>();
+builder.Services.AddScoped<IRoomDal, EfRoomDAL>();
+builder.Services.AddScoped<ISubscribeDal, EfSubscribeDAL>();
+builder.Services.AddScoped<ITestimonialDal, EfTestimonialDAL>();
+builder.Services.AddScoped<IServiceDal, EfServiceDAL>();
+builder.Services.AddScoped<IAboutDal, EfAboutDAL>();
+builder.Services.AddScoped<IBookingDal, EfBookingDAL>();
+builder.Services.AddScoped<IContactDal, EfContactDAL>();
+builder.Services.AddScoped<IGuestDal, EfGuestDAL>();
+builder.Services.AddScoped<IMessageCategoryDal, EfMessageCategoryDAL>();
+builder.Services.AddScoped<IWorkLocationDal, EfWorkLocationDAL>();
+
+// BusinessLayer
+builder.Services.AddScoped<IStaffService, StaffManager>();
+builder.Services.AddScoped<IRoomService, RoomManager>();
+builder.Services.AddScoped<ISubscribeService, SubscribeManager>();
+builder.Services.AddScoped<ITestimonialService, TestimonialManager>();
+builder.Services.AddScoped<IServiceService, ServiceManager>();
+builder.Services.AddScoped<IAboutService, AboutManager>();
+builder.Services.AddScoped<IBookingService, BookingManager>();
+builder.Services.AddScoped<IContactService, ContactManager>();
+builder.Services.AddScoped<IGuestService, GuestManager>();
+builder.Services.AddScoped<IMessageCategoryService, MessageCategoryManager>();
+builder.Services.AddScoped<IWorkLocationService, WorkLocationManager>();
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Services.AddCors(opt =>
+{
+	opt.AddPolicy("HanaHotelApiCors", opts =>
+	{
+		opts.AllowAnyOrigin()
+			.AllowAnyHeader()
+			.AllowAnyMethod();
+	});
+});
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
+
+// IMPORTANT: register a distributed cache implementation before AddSession.
+// The session middleware depends on IDistributedCache (DistributedSessionStore).
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+	options.IdleTimeout = TimeSpan.FromDays(1); // session expires after 1 day of inactivity
+	options.Cookie.HttpOnly = true;
+	options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddHttpContextAccessor(); // để controller có thể truy cập session
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+	app.UseSwagger();
+	app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseCors("HanaHotelApiCors");
+
+app.UseSession();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
