@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using HanaHotel.EntityLayer.Concrete;
 using HanaHotel.WebUI.DTOs.BookingDTO;
 using HanaHotel.WebUI.Models;
+using HanaHotel.WebUI.ViewModels;
 
 namespace HanaHotel.WebUI.Controllers
 {

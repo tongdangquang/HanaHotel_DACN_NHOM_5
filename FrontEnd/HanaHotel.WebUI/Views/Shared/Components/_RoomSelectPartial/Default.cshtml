@@ -1,0 +1,21 @@
+﻿@model List<ResultRoomDTO>
+
+@{
+    int? selectedId = null;
+    if (ViewData["SelectedId"] != null)
+    {
+        // ViewData may contain boxed int
+        selectedId = Convert.ToInt32(ViewData["SelectedId"]);
+    }
+
+    var rooms = Model ?? new List<ResultRoomDTO>();
+}
+
+<select class="form-select" id="selectRoomType" name="RoomId" required>
+    <option value="">-- Chọn loại phòng --</option>
+    @foreach (var r in rooms)
+    {
+        var isSel = selectedId.HasValue && selectedId.Value == r.RoomId;
+        <option value="@r.RoomId" selected="@(isSel ? "selected" : null)">@r.Title</option>
+    }
+</select>

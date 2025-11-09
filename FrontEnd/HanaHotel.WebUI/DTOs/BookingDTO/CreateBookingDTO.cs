@@ -13,5 +13,10 @@ namespace HanaHotel.WebUI.DTOs.BookingDTO
         public string Room { get; set; }
         public string SpecialRequest { get; set; }
         public BookingStatus Status { get; set; }
+
+        // new properties for relations
+        public int? ServiceId { get; set; }
+        public int? RoomId { get; set; }
+        public int? UserId { get; set; }
     }
 }

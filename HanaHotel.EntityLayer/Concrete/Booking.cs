@@ -13,6 +13,10 @@
         public string SpecialRequest { get; set; }
         public BookingStatus Status { get; set; }
 
+        // Added fields
+        public int? ServiceId { get; set; }
+        public int? RoomId { get; set; }
+        public int? UserId { get; set; }
     }
 
     public enum BookingStatus
@@ -22,6 +26,4 @@
         Cancelled,
         Completed
     }
-
-
 }

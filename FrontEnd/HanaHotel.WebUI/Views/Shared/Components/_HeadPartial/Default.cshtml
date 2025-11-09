@@ -1,6 +1,6 @@
 ﻿<head>
     <meta charset="utf-8">
-    <title>Hana Hotel</title>
+    <title>@(ViewData["Title"] ?? "Hana Hotel")</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -22,9 +22,11 @@
     <link href="~/Hotel-html-template/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="~/Hotel-html-template/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <!-- Customized Bootstrap Stylesheet -->
+    <!-- Template / Bootstrap Stylesheet (base template CSS) -->
     <link href="~/Hotel-html-template/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
     <link href="~/Hotel-html-template/css/style.css" rel="stylesheet">
+
+    <!-- Project-specific styles (overrides) -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HanaHotel.WebUI.styles.css" asp-append-version="true" />
 </head>
