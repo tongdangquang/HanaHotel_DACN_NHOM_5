@@ -1,4 +1,5 @@
-﻿@model UpdateBookingDTO
+﻿@model HanaHotel.WebUI.DTOs.BookingDTO.UpdateBookingDTO
+@using HanaHotel.EntityLayer.Concrete
 
 @{
     ViewData["Title"] = "Cập nhật đặt phòng";
@@ -6,37 +7,47 @@
 }
 
 <form method="post" asp-action="UpdateBooking" asp-controller="AdminBooking">
-    <input type="hidden" asp-for="BookingId" />
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
 
-    <div class="form-group">
-        <label asp-for="CheckInDate" class="control-label">Ngày nhận phòng</label>
+    <div class="form-group mb-3">
+        <label asp-for="CheckInDate" class="form-label">Ngày nhận phòng</label>
         <input asp-for="CheckInDate" type="date" class="form-control" />
+        <span asp-validation-for="CheckInDate" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="CheckOutDate" class="control-label">Ngày trả phòng</label>
+    <div class="form-group mb-3">
+        <label asp-for="CheckOutDate" class="form-label">Ngày trả phòng</label>
         <input asp-for="CheckOutDate" type="date" class="form-control" />
+        <span asp-validation-for="CheckOutDate" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label class="control-label" style="margin-right: 10px;">Trạng thái</label>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-warning @(Model.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Pending ? "active" : "")" style="margin-right: 5px;">
-                <input type="radio" name="Status" value="Pending" @(Model.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Pending ? "checked" : "") /> Chờ xử lý
+    <div class="form-group mb-3">
+        <label class="form-label me-2">Trạng thái</label>
+        <div class="btn-group" role="group" aria-label="Trạng thái">
+            <label class="btn btn-outline-warning @(Model.Status == BookingStatus.Pending ? "active" : "") me-1">
+                <input asp-for="Status" type="radio" value="Pending" autocomplete="off" hidden /> Chờ xử lý
             </label>
-            <label class="btn btn-success @(Model.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Confirmed ? "active" : "")" style="margin-right: 5px;">
-                <input type="radio" name="Status" value="Confirmed" @(Model.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Confirmed ? "checked" : "") /> Đã xác nhận
+            <label class="btn btn-outline-success @(Model.Status == BookingStatus.Confirmed ? "active" : "") me-1">
+                <input asp-for="Status" type="radio" value="Confirmed" autocomplete="off" hidden /> Đã xác nhận
             </label>
-            <label class="btn btn-danger @(Model.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Cancelled ? "active" : "")" style="margin-right: 5px;">
-                <input type="radio" name="Status" value="Cancelled" @(Model.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Cancelled ? "checked" : "") /> Đã hủy
+            <label class="btn btn-outline-danger @(Model.Status == BookingStatus.Cancelled ? "active" : "") me-1">
+                <input asp-for="Status" type="radio" value="Cancelled" autocomplete="off" hidden /> Đã hủy
             </label>
-            <label class="btn btn-primary @(Model.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Completed ? "active" : "")">
-                <input type="radio" name="Status" value="Completed" @(Model.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Completed ? "checked" : "") /> Hoàn thành
+            <label class="btn btn-outline-primary @(Model.Status == BookingStatus.Completed ? "active" : "")">
+                <input asp-for="Status" type="radio" value="Completed" autocomplete="off" hidden /> Hoàn thành
             </label>
         </div>
+        <span asp-validation-for="Status" class="text-danger d-block mt-1"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="AdditionalRequest" class="form-label">Yêu cầu đặc biệt</label>
+        <textarea asp-for="AdditionalRequest" class="form-control" rows="3"></textarea>
     </div>
 
     <div class="form-group mt-3">
         <button type="submit" class="btn btn-dark">Cập nhật đặt phòng</button>
+        <a asp-controller="AdminBooking" asp-action="Index" class="btn btn-secondary ms-2">Hủy</a>
     </div>
 </form>

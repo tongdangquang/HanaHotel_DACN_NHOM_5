@@ -4,16 +4,19 @@ namespace HanaHotel.WebUI.DTOs.ServiceDTO
 {
     public class CreateServiceDTO
     {
-        private const string LENGTH_MESSAGE = "Title can be must maximum 50 characters";
+        [Required(ErrorMessage = "Service name is required.")]
+        [StringLength(100, ErrorMessage = "Service name must be at most 100 characters.")]
+        public string ServiceName { get; set; }
 
-        [Required(ErrorMessage = "Service icon is required.")]
-        public string ServiceIcon { get; set; }
+        [Required(ErrorMessage = "Price is required.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be a non-negative number.")]
+        public double Price { get; set; }
 
-        [Required(ErrorMessage = "Title is required.")]
-        [StringLength(50, ErrorMessage = LENGTH_MESSAGE)]
-        public string Title { get; set; }
+        [Required(ErrorMessage = "Unit is required.")]
+        [StringLength(50, ErrorMessage = "Unit must be at most 50 characters.")]
+        public string Unit { get; set; }
 
-        [Required(ErrorMessage = "Description is required.")]
+        [StringLength(2000, ErrorMessage = "Description cannot exceed 2000 characters.")]
         public string? Description { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿@model CreateBookingDTO
-@using HanaHotel.WebUI.DTOs.ServiceDTO
-@using HanaHotel.WebUI.DTOs.RoomDTO
+﻿@model HanaHotel.WebUI.DTOs.BookingDTO.CreateBookingDTO
 
 <div class="container-xxl py-5">
     <div class="container">
@@ -24,21 +22,26 @@
             <div class="col-lg-6">
                 <div class="wow fadeInUp" data-wow-delay="0.2s">
                     <form method="post" asp-action="AddBooking" asp-controller="Booking">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" asp-for="Name" placeholder="Họ và tên">
-                                    <label for="name">Họ và tên</label>
-                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                    <input type="text" class="form-control" asp-for="FullName" placeholder="Họ và tên" />
+                                    <label for="fullname">Họ và tên</label>
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" asp-for="Email" placeholder="Địa chỉ Email">
+                                    <input type="email" class="form-control" asp-for="Email" placeholder="Địa chỉ Email" />
                                     <label for="email">Địa chỉ Email</label>
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-floating date" id="date3" data-target-input="nearest">
                                     <input type="date" class="form-control" asp-for="CheckInDate" id="checkin" placeholder="Ngày nhận phòng" />
@@ -46,6 +49,7 @@
                                     <span asp-validation-for="CheckInDate" class="text-danger"></span>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-floating date" id="date4" data-target-input="nearest">
                                     <input type="date" class="form-control" asp-for="CheckOutDate" id="checkout" placeholder="Ngày trả phòng" />
@@ -54,55 +58,31 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" asp-for="AdultCount" min="1" max="10" step="1" value="1" />
-                                    <label for="select1">Số lượng người lớn</label>
-                                    <span asp-validation-for="AdultCount" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating">
-                                    <input type="number" class="form-control" asp-for="ChildCount" min="0" max="10" step="1" value="0" />
-                                    <label for="select2">Số lượng trẻ em</label>
-                                    <span asp-validation-for="ChildCount" class="text-danger"></span>
+                                    <input type="tel" class="form-control" asp-for="Phone" placeholder="Số điện thoại (tuỳ chọn)" />
+                                    <label for="phone">Số điện thoại</label>
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
                                 </div>
                             </div>
 
-                            <!-- Room type selection (required) - pass Model?.RoomId to avoid NRE -->
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-floating">
-                                    @await Component.InvokeAsync("_RoomSelectPartial", new { selectedId = Model?.RoomId })
+                                    @* Room select component - truyền selectedId an toàn *@
+                                    @await Component.InvokeAsync("_RoomSelectPartial", new { selectedId = (int?)Model?.RoomId })
                                     <label for="selectRoomType">Loại phòng <span class="text-danger">*</span></label>
                                     <span asp-validation-for="RoomId" class="text-danger"></span>
                                 </div>
                             </div>
 
-                            <!-- Room count as numeric input -->
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="number" class="form-control" asp-for="Room" min="1" max="10" step="1" value="1" />
-                                    <label for="select3">Số lượng phòng</label>
-                                    <span asp-validation-for="Room" class="text-danger"></span>
-                                </div>
-                            </div>
-
-                            <!-- Service selection replaced by view component (optional) - pass Model?.ServiceId -->
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    @await Component.InvokeAsync("_ServiceSelectPartial", new { selectedId = Model?.ServiceId })
-                                    <label for="selectService">Dịch vụ kèm theo (tuỳ chọn)</label>
-                                    @* <span asp-validation-for="ServiceId" class="text-danger"></span> *@
-                                </div>
-                            </div>
-
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Special Requests" asp-for="SpecialRequest" id="message" style="height: 100px" ></textarea>
+                                    <textarea class="form-control" placeholder="Yêu cầu đặc biệt" asp-for="AdditionalRequest" id="message" style="height: 100px"></textarea>
                                     <label for="message">Yêu cầu đặc biệt</label>
-                                    @* <span asp-validation-for="SpecialRequest" class="text-danger"></span> *@
+                                    <span asp-validation-for="AdditionalRequest" class="text-danger"></span>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">Đặt phòng ngay</button>
                             </div>

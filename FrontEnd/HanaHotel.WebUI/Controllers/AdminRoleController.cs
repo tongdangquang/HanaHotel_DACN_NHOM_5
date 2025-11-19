@@ -9,10 +9,10 @@ namespace HanaHotel.WebUI.Controllers
 {
     public class AdminRoleController : Controller
     {
-        private readonly RoleManager<AppRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
 
-        public AdminRoleController(RoleManager<AppRole> roleManager, IMapper mapper)
+        public AdminRoleController(RoleManager<Role> roleManager, IMapper mapper)
         {
             _roleManager = roleManager;
             _mapper = mapper;
@@ -36,7 +36,7 @@ namespace HanaHotel.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = _mapper.Map<AppRole>(createRoleDTO);
+                var role = _mapper.Map<Role>(createRoleDTO);
                 var result = await _roleManager.CreateAsync(role);
 
                 if (result.Succeeded)

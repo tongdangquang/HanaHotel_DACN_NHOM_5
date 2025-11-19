@@ -15,7 +15,7 @@
     <option value="">-- Chọn loại phòng --</option>
     @foreach (var r in rooms)
     {
-        var isSel = selectedId.HasValue && selectedId.Value == r.RoomId;
-        <option value="@r.RoomId" selected="@(isSel ? "selected" : null)">@r.Title</option>
+        var isSel = selectedId.HasValue && selectedId.Value == r.Id;
+        <option value="@r.Id" selected="@(isSel ? "selected" : null)">@r.RoomName</option>
     }
 </select>

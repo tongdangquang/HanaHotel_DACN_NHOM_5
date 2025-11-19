@@ -1,7 +1,7 @@
 ﻿@model List<HanaHotel.WebUI.DTOs.RoomDTO.ResultRoomDTO>
 @{
     Layout = null;
-    var firstRoom = Model.FirstOrDefault(); // Lấy phòng đầu tiên cho carousel
+    var firstRoom = Model.FirstOrDefault();
 }
 
 <!DOCTYPE html>
@@ -20,55 +20,26 @@
             <i class="bi bi-arrow-up"></i>
         </a>
 
-        <!-- Carousel phòng đầu tiên -->
-        <!-- @if (firstRoom != null)
-          {
-              <div class="container my-5">
-                  <div class="card shadow-lg border-0">
-                      <div class="row no-gutters">
-                          <div class="col-md-6">
-                              <div id="roomCarousel" class="carousel slide" data-ride="carousel">
-                                  <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                          <img src="~/Hotel-html-template/img/@firstRoom.RoomCoverImage"
-                                               class="d-block w-100"
-                                               alt="@firstRoom.Title"
-                                               style="height:400px; object-fit:cover;">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-md-6">
-                              <div class="p-4">
-                                  <h3>@firstRoom.Title</h3>
-                                  <p>@firstRoom.Description</p>
-                                  <p>Giường: @firstRoom.BedCount • Phòng tắm: @firstRoom.BathCount</p>
-                                  <p>Wifi: @firstRoom.Wifi</p>
-                                  <p>Giá: @firstRoom.Price đ/ Đêm</p>
-                                  <a href="@Url.Action("Detail", "Room", new { id = firstRoom.RoomId })" class="btn btn-primary">Xem chi tiết</a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          }-->
-
         <!-- Danh sách phòng -->
         <div class="container py-5">
             <div class="row g-4">
                 @foreach (var room in Model)
                 {
+                    var mainImage = (room.ImagePaths != null && room.ImagePaths.Any())
+                        ? room.ImagePaths.First()
+                        : "~/Hotel-html-template/img/room-placeholder.jpg";
+
                     <div class="col-lg-4 col-md-6">
                         <div class="card shadow rounded">
-                            <img src="~/Hotel-html-template/img/@room.RoomCoverImage" class="card-img-top" style="cursor:pointer;"
-                                 onclick="location.href='@Url.Action("Detail", "Room", new { id = room.RoomId })'" />
+                            <img src="@Url.Content(mainImage)" class="card-img-top" style="cursor:pointer; height:220px; object-fit:cover;"
+                                 onclick="location.href='@Url.Action("Detail", "Room", new { id = room.Id })'" />
                             <div class="card-body">
-                                <h5 class="card-title">@room.Title</h5>
+                                <h5 class="card-title">@room.RoomName</h5>
                                 <p class="card-text">@room.Description</p>
-                                <p>Giường: @room.BedCount • Phòng tắm: @room.BathCount</p>
-                                <p>Wifi: @(room.Wifi.ToLower() == "true" ? "Có" : "Không") </p>
-                                <p>Giá: @room.Price đ/ Đêm</p>
-                                <a href="@Url.Action("Detail", "Room", new { id = room.RoomId })" class="btn btn-primary">Xem chi tiết</a>
+                                <p>Giường: @room.BedCount</p>
+                                <p>Kích thước: @room.Size</p>
+                                <p>Giá: @room.Price.ToString("N0") đ/đêm</p>
+                                <a href="@Url.Action("Detail", "Room", new { id = room.Id })" class="btn btn-primary">Xem chi tiết</a>
                             </div>
                         </div>
                     </div>

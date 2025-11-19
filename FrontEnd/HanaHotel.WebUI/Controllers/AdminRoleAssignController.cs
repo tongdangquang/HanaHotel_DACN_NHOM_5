@@ -3,15 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HanaHotel.EntityLayer.Concrete;
 using HanaHotel.WebUI.Models.Role;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace HanaHotel.WebUI.Controllers
 {
     public class AdminRoleAssignController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<AppRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public AdminRoleAssignController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public AdminRoleAssignController(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -41,8 +44,8 @@ namespace HanaHotel.WebUI.Controllers
             var roleAssignViewModels = roles.Select(role => new RoleAssignViewModel
             {
                 RoleId = role.Id,
-                RoleName = role.Name!,
-                RoleExist = userRoles.Contains(role.Name!)
+                RoleName = role.Name ?? string.Empty,
+                RoleExist = userRoles.Contains(role.Name)
             }).ToList();
 
             return View(roleAssignViewModels);
@@ -51,13 +54,37 @@ namespace HanaHotel.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRole(List<RoleAssignViewModel> roleAssignViewModels)
         {
-            var user_id = (int)TempData["user_id"]!;
+            if (roleAssignViewModels == null)
+                return RedirectToAction("Index");
+
+            var userIdObj = TempData.Peek("user_id");
+            if (userIdObj == null || !int.TryParse(userIdObj.ToString(), out var user_id))
+                return RedirectToAction("Index");
+
             var user = await _userManager.FindByIdAsync(user_id.ToString());
+            if (user == null)
+                return RedirectToAction("Error404", "ErrorPage");
+
+            var currentRoles = (await _userManager.GetRolesAsync(user)).ToHashSet();
+
             foreach (var item in roleAssignViewModels)
-                if (item.RoleExist)
-                    await _userManager.AddToRoleAsync(user!, item.RoleName);
-                else
-                    await _userManager.RemoveFromRoleAsync(user!, item.RoleName);
+            {
+                if (string.IsNullOrWhiteSpace(item.RoleName))
+                    continue;
+
+                var shouldExist = item.RoleExist;
+                var existsNow = currentRoles.Contains(item.RoleName);
+
+                if (shouldExist && !existsNow)
+                {
+                    await _userManager.AddToRoleAsync(user, item.RoleName);
+                }
+                else if (!shouldExist && existsNow)
+                {
+                    await _userManager.RemoveFromRoleAsync(user, item.RoleName);
+                }
+            }
+
             return RedirectToAction("Index");
         }
     }

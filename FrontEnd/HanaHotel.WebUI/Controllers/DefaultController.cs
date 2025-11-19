@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HanaHotel.WebUI.Controllers
 {
-    [AllowAnonymous]
+        [AllowAnonymous]
     public class DefaultController : Controller
-    {
-        public IActionResult Index()
         {
+        public IActionResult Index()
+            {
             return View();
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using HanaHotel.EntityLayer.Concrete;
 
 namespace HanaHotel.WebUI.DTOs.RegisterDTO
 {
@@ -7,28 +9,26 @@ namespace HanaHotel.WebUI.DTOs.RegisterDTO
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Last Name is required.")]
-        public string LastName { get; set; }
+        [Required(ErrorMessage = "Date of birth is required.")]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
 
-        [Required(ErrorMessage = "Username is required.")]
-        public string UserName { get; set; }
+        [Required(ErrorMessage = "Gender is required.")]
+        public GenderType Gender { get; set; }
+
+        [Required(ErrorMessage = "Address is required.")]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "Phone Number is required.")]
+        [Phone(ErrorMessage = "Invalid phone number.")]
+        public string Phone { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Phone Number is required.")]
-        [Phone(ErrorMessage = "Invalid phone number.")]
-        public string PhoneNumber { get; set; }
-
-        [Required(ErrorMessage = "City is required.")]
-        public string City { get; set; }
-
-        [Required(ErrorMessage = "Department is required.")]
-        public string Department { get; set; }
-
-        [Required(ErrorMessage = "Work Location is required.")]
-        public int WorkLocationId { get; set; }
+        [Required(ErrorMessage = "Username is required.")]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]

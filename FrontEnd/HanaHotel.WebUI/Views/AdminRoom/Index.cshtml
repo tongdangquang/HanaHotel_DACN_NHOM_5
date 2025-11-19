@@ -1,4 +1,4 @@
-﻿@model List<ResultRoomDTO>
+﻿@model List<HanaHotel.WebUI.DTOs.RoomDTO.ResultRoomDTO>
 
 @{
     ViewData["Title"] = "Danh sách phòng";
@@ -9,7 +9,7 @@
     <h2 class="text-center mb-4">Quản lý phòng</h2>
 
     <div class="mb-3">
-        <a href="@Url.Action("AddRoom", "AdminRoom")" class="btn btn-primary">Thêm phòng mới</a>
+        <a asp-controller="AdminRoom" asp-action="AddRoom" class="btn btn-primary">Thêm phòng mới</a>
     </div>
 
     @if (!Model.Any())
@@ -24,13 +24,12 @@
             <table class="table table-bordered table-striped text-center" style="width: 100%;">
                 <thead class="table-dark">
                     <tr>
-                        <th>Hình ảnh</th>
+                        <th>ID</th>
                         <th>Tiêu đề</th>
-                        <th>Số phòng</th>
+                        <th>Trạng thái</th>
                         <th>Giá</th>
+                        <th>Kích thước</th>
                         <th>Số giường</th>
-                        <th>Số phòng tắm</th>
-                        <th>Wifi</th>
                         <th>Mô tả</th>
                         <th>Hành động</th>
                     </tr>
@@ -39,19 +38,35 @@
                     @foreach (var room in Model)
                     {
                         <tr>
+                            <td>@room.Id</td>
+                            <td>@room.RoomName</td>
                             <td>
-                                <img src="~/Hotel-html-template/img/@room.RoomCoverImage" alt="Room Image" style="width: 80px; height: auto;" />
+                                @switch(room.Status)
+                                {
+                                    case HanaHotel.EntityLayer.Concrete.RoomStatus.Available:
+                                        <span class="badge bg-success">Sẵn sàng</span>;
+                                        break;
+                                    case HanaHotel.EntityLayer.Concrete.RoomStatus.Reserved:
+                                        <span class="badge bg-secondary">Đã đặt</span>;
+                                        break;
+                                    case HanaHotel.EntityLayer.Concrete.RoomStatus.Occupied:
+                                        <span class="badge bg-secondary">Đang sử dụng</span>;
+                                        break;
+                                    case HanaHotel.EntityLayer.Concrete.RoomStatus.Maintenance:
+                                        <span class="badge bg-warning text-dark">Bảo trì</span>;
+                                        break;
+                                    default:
+                                        <span class="badge bg-secondary">Không xác định</span>;
+                                        break;
+                                }
                             </td>
-                            <td>@room.Title</td>
-                            <td>@room.RoomNumber</td>
-                            <td>@room.Price</td>
+                            <td>@room.Price.ToString("N0")</td>
+                            <td>@room.Size</td>
                             <td>@room.BedCount</td>
-                            <td>@room.BathCount</td>
-                            <td>@room.Wifi</td>
-                            <td>@room.Description</td>
+                            <td style="max-width:240px;white-space:normal;text-align:left;">@room.Description</td>
                             <td>
-                                <a href="@Url.Action("UpdateRoom", "AdminRoom", new { id = room.RoomId })" class="btn btn-warning btn-sm">Chỉnh sửa</a>
-                                <a href="@Url.Action("DeleteRoom", "AdminRoom", new { id = room.RoomId })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa phòng này không?');">Xóa</a>
+                                <a asp-controller="AdminRoom" asp-action="UpdateRoom" asp-route-id="@room.Id" class="btn btn-warning btn-sm">Chỉnh sửa</a>
+                                <a asp-controller="AdminRoom" asp-action="DeleteRoom" asp-route-id="@room.Id" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa phòng này không?');">Xóa</a>
                             </td>
                         </tr>
                     }

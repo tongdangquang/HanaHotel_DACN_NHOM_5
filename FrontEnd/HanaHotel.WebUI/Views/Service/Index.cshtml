@@ -1,4 +1,4 @@
-﻿@model List<ResultServiceDTO>
+﻿@model List<HanaHotel.WebUI.DTOs.ServiceDTO.ResultServiceDTO>
 
 @{
     ViewData["Title"] = "Quản lý dịch vụ";
@@ -11,48 +11,50 @@
     <h2 class="text-center mb-4">Quản lý dịch vụ</h2>
 
     <div class="d-flex justify-content-end mb-3">
-        <a href="@Url.Action("AddService", "Service")" class="btn btn-primary">
+        <a asp-controller="Service" asp-action="AddService" class="btn btn-primary">
             <i class="fas fa-plus-circle"></i> Thêm dịch vụ mới
         </a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover align-middle">
-            <thead class="bg-dark text-white">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Biểu tượng</th>
-                    <th scope="col">Tên dịch vụ</th>
-                    <th scope="col">Mô tả</th>
-                    <th scope="col" class="text-center">Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var service in Model)
-                {
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">Không có dịch vụ nào được hiển thị.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover align-middle">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên dịch vụ</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Đơn vị</th>
+                        <th scope="col">Mô tả</th>
+                        <th scope="col" class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var service in Model)
+                    {
                         <tr>
-                            <td>@service.ServiceId</td>
+                            <td>@service.Id</td>
+                            <td>@service.ServiceName</td>
+                            <td>@service.Price.ToString("N0")</td>
+                            <td>@service.Unit</td>
+                            <td>@(string.IsNullOrWhiteSpace(service.Description) ? "-" : service.Description)</td>
                             <td class="text-center">
-                                <i class="@service.ServiceIcon" style="font-size: 24px;"></i>
-                            </td>
-                            <td>@service.Title</td>
-                            <td>@service.Description</td>
-                            <td class="text-center">
-                                <a href="@Url.Action("UpdateService", "Service", new { id = service.ServiceId })" class="btn btn-warning btn-sm">
+                                <a asp-controller="Service" asp-action="UpdateService" asp-route-id="@service.Id" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
-                                <a href="@Url.Action("DeleteService", "Service", new { id = service.ServiceId })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chắn muốn xóa dịch vụ này?');">
+                                <a asp-controller="Service" asp-action="DeleteService" asp-route-id="@service.Id" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chắn muốn xóa dịch vụ này?');">
                                     <i class="fas fa-trash-alt"></i> Xóa
                                 </a>
                             </td>
                         </tr>
-                }else 
-                {
-                <tr>
-                    <td colspan="5" class="text-center text-muted">Không có dịch vụ nào được hiển thị.</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </div>

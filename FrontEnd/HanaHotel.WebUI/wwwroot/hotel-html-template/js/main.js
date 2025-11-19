@@ -83,8 +83,8 @@
     });
 
 
-    // Testimonials carousel
-    $(".testimonial-carousel").owlCarousel({
+    // Reviews carousel
+    $(".review-carousel").owlCarousel({
         autoplay: true,
         smartSpeed: 1000,
         margin: 25,

@@ -1,15 +1,30 @@
-﻿namespace HanaHotel.WebUI.DTOs.RoomDTO
+﻿using System.ComponentModel.DataAnnotations;
+using HanaHotel.EntityLayer.Concrete;
+
+namespace HanaHotel.WebUI.DTOs.RoomDTO
 {
     public class UpdateRoomDTO
     {
-        public int RoomId { get; set; }
-        public required string RoomNumber { get; set; }
-        public required string RoomCoverImage { get; set; }
-        public required int Price { get; set; }
-        public required string Title { get; set; }
-        public required string BedCount { get; set; }
-        public required string BathCount { get; set; }
-        public required string Wifi { get; set; }
+        [Required]
+        public int Id { get; set; }
+
+        [Required]
+        public required string RoomName { get; set; }
+
+        [Required]
+        public RoomStatus Status { get; set; }
+
+        [Required]
         public required string Description { get; set; }
+
+        [Range(0, double.MaxValue)]
+        public double Size { get; set; }
+
+        [Required]
+        [Range(0, double.MaxValue)]
+        public double Price { get; set; }
+
+        [Required]
+        public required string BedCount { get; set; }
     }
 }

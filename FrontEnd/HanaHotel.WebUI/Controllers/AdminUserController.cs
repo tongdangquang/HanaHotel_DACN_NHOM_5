@@ -1,36 +1,31 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using HanaHotel.EntityLayer.Concrete;
 using HanaHotel.WebUI.DTOs.UserDTO;
-using HanaHotel.WebUI.DTOs.WorkLocationDTO;
-using Microsoft.Extensions.Options;
-using HanaHotel.WebUI.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace HanaHotel.WebUI.Controllers
 {
     public class AdminUserController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-		private readonly string _apiUrl;
 
-		public AdminUserController(UserManager<AppUser> userManager, IMapper mapper, IHttpClientFactory httpClientFactory, IOptions<AppSettings> appSettings)
+        public AdminUserController(UserManager<User> userManager, IMapper mapper)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _httpClientFactory = httpClientFactory;
-            _apiUrl = appSettings.Value.urlAPI;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var users = await _userManager.Users.Include(user => user.WorkLocation).ToListAsync();
+            var users = await _userManager.Users.ToListAsync();
             return View(users);
         }
 
@@ -38,9 +33,23 @@ namespace HanaHotel.WebUI.Controllers
         public async Task<IActionResult> UpdateUser(int id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
-            ViewBag.Items = await LoadWorkLocations();
-            var value = _mapper.Map<UpdateUserDTO>(user);
-            return View(value);
+            if (user == null)
+                return RedirectToAction("Index");
+
+            var dto = new UpdateUserDTO
+            {
+                Id = user.Id,
+                Name = user.Name,
+                DateOfBirth = user.DateOfBirth,
+                Gender = user.Gender,
+                Address = user.Address,
+                Phone = user.Phone,
+                Email = user.Email ?? string.Empty,
+                UserName = user.UserName,
+                RoleId = user.RoleId
+            };
+
+            return View(dto);
         }
 
         [HttpPost]
@@ -48,7 +57,6 @@ namespace HanaHotel.WebUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Items = await LoadWorkLocations();
                 return View(updateUserDTO);
             }
 
@@ -56,23 +64,32 @@ namespace HanaHotel.WebUI.Controllers
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Không tìm thấy người dùng.");
-                ViewBag.Items = await LoadWorkLocations();
                 return View(updateUserDTO);
             }
 
             user.Name = updateUserDTO.Name;
-            user.LastName = updateUserDTO.LastName;
-            user.UserName = updateUserDTO.UserName;
+            user.DateOfBirth = updateUserDTO.DateOfBirth;
+            user.Gender = updateUserDTO.Gender;
+            user.Address = updateUserDTO.Address;
+            user.Phone = updateUserDTO.Phone;
             user.Email = updateUserDTO.Email;
-            user.PhoneNumber = updateUserDTO.PhoneNumber;
-            user.City = updateUserDTO.City;
-            user.Department = updateUserDTO.Department;
-            user.WorkLocationId = updateUserDTO.WorkLocationId;
+            user.UserName = updateUserDTO.UserName;
+            user.RoleId = updateUserDTO.RoleId;
 
             if (!string.IsNullOrEmpty(updateUserDTO.Password))
+            {
                 user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, updateUserDTO.Password);
+            }
 
-            await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var err in result.Errors)
+                    ModelState.AddModelError(string.Empty, err.Description);
+
+                return View(updateUserDTO);
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -80,25 +97,11 @@ namespace HanaHotel.WebUI.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
-            await _userManager.DeleteAsync(user!);
-            return RedirectToAction("Index", "AdminUser");
-        }
-
-        private async Task<List<SelectListItem>> LoadWorkLocations()
-        {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"{_apiUrl}/api/WorkLocation");
-            if (responseMessage.IsSuccessStatusCode)
+            if (user != null)
             {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultWorkLocationDTO>>(jsonData);
-                return values!.Select(item => new SelectListItem
-                {
-                    Text = item.WorkLocationCityName,
-                    Value = item.WorkLocationId.ToString()
-                }).ToList();
+                await _userManager.DeleteAsync(user);
             }
-            return [];
+            return RedirectToAction("Index", "AdminUser");
         }
     }
 }

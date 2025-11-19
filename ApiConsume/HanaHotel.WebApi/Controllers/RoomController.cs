@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using HanaHotel.BusinessLayer.Abstract;
+using HanaHotel.DataAccessLayer.Abstract;
 using HanaHotel.DtoLayer.DTOs.RoomDTO;
 using HanaHotel.EntityLayer.Concrete;
 
@@ -11,29 +14,54 @@ namespace HanaHotel.WebApi.Controllers
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
+        private readonly IImageDal _imageDal;
         private readonly IMapper _mapper;
 
-
-        public RoomController(IRoomService roomService, IMapper mapper)
+        public RoomController(IRoomService roomService, IImageDal imageDal, IMapper mapper)
         {
             _roomService = roomService;
+            _imageDal = imageDal;
             _mapper = mapper;
         }
 
+        // GET: api/room
         [HttpGet]
         public IActionResult GetRooms()
         {
             var rooms = _roomService.TGetList();
-            return Ok(rooms);
+            var images = _imageDal.GetList();
+
+            var result = rooms.Select(r =>
+            {
+                var dto = _mapper.Map<ResultRoomDTO>(r);
+                dto.ImagePaths = images
+                    .Where(i => i.RoomId == r.Id)
+                    .Select(i => i.ImagePath)
+                    .ToList();
+                return dto;
+            }).ToList();
+
+            return Ok(result);
         }
 
+        // GET: api/room/5
         [HttpGet("{id}")]
         public IActionResult GetRoom(int id)
         {
             var room = _roomService.TGetByID(id);
-            return Ok(room);
+            if (room == null)
+                return NotFound();
+
+            var dto = _mapper.Map<ResultRoomDTO>(room);
+            dto.ImagePaths = _imageDal.GetList()
+                .Where(i => i.RoomId == room.Id)
+                .Select(i => i.ImagePath)
+                .ToList();
+
+            return Ok(dto);
         }
 
+        // PUT: api/room
         [HttpPut]
         public IActionResult UpdateRoom(UpdateRoomDTO updateRoomDTO)
         {
@@ -41,11 +69,11 @@ namespace HanaHotel.WebApi.Controllers
                 return BadRequest(ModelState);
 
             var value = _mapper.Map<Room>(updateRoomDTO);
-
             _roomService.TUpdate(value);
             return Ok("Updated Successfully");
         }
 
+        // POST: api/room
         [HttpPost]
         public IActionResult AddRoom(RoomAddDTO roomAddDTO)
         {
@@ -58,6 +86,7 @@ namespace HanaHotel.WebApi.Controllers
             return Ok();
         }
 
+        // DELETE: api/room/5
         [HttpDelete("{id}")]
         public IActionResult DeleteRoom(int id)
         {

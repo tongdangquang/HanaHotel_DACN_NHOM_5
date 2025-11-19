@@ -1,54 +1,49 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using HanaHotel.EntityLayer.Concrete;
 
 namespace HanaHotel.WebUI.DTOs.UserDTO
 {
     public class UpdateUserDTO
     {
+        [Required]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
-        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Tên không được để trống")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Last Name is required.")]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        [Required(ErrorMessage = "Ngày sinh không được để trống")]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
 
-        [Required(ErrorMessage = "Username is required.")]
-        [Display(Name = "Username")]
-        public string UserName { get; set; }
+        [Required(ErrorMessage = "Giới tính là bắt buộc")]
+        public GenderType Gender { get; set; }
 
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid email address.")]
-        [Display(Name = "Email")]
+        [Display(Name = "Địa chỉ")]
+        public string? Address { get; set; }
+
+        [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
+        [Display(Name = "Số điện thoại")]
+        public string? Phone { get; set; }
+
+        [Required(ErrorMessage = "Email không được để trống")]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Phone Number is required.")]
-        [Phone(ErrorMessage = "Invalid phone number.")]
-        [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Username không được để trống")]
+        public string UserName { get; set; }
 
-        [Required(ErrorMessage = "City is required.")]
-        [Display(Name = "City")]
-        public string City { get; set; }
-
-        [Required(ErrorMessage = "Department is required.")]
-        [Display(Name = "Department")]
-        public string Department { get; set; }
-
-        [Required(ErrorMessage = "Work Location is required.")]
-        [Display(Name = "Work Location")]
-        public int WorkLocationId { get; set; }
-
+        // Optional: change password when provided
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$",
-            ErrorMessage = "Password must be at least 5 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{5,}$",
+            ErrorMessage = "Mật khẩu phải có ít nhất 5 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt")]
         public string? Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords do not match.")]
-        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "Mật khẩu không khớp")]
         public string? ConfirmPassword { get; set; }
+
+        // RoleId kept because entity has it
+        public int RoleId { get; set; }
     }
 }

@@ -2,9 +2,14 @@
 {
     public class ResultServiceDTO
     {
-        public int ServiceId { get; set; }
-        public required string ServiceIcon { get; set; }
-        public required string Title { get; set; }
-        public required string Description { get; set; }
+        public int Id { get; set; }
+
+        public string ServiceName { get; set; }
+
+        public double Price { get; set; }
+
+        public string Unit { get; set; }
+
+        public string? Description { get; set; }
     }
 }

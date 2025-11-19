@@ -1,11 +1,16 @@
-﻿namespace HanaHotel.EntityLayer.Concrete
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HanaHotel.EntityLayer.Concrete
 {
     public class Service
     {
-        public int ServiceId { get; set; }
-        public string ServiceIcon { get; set; }
-        public string Title { get; set; }
+        [Key]
+		public int Id { get; set; }
+        public string ServiceName { get; set; }
+        public double Price { get; set; }   
+        public string Unit { get; set; }
         public string Description { get; set; }
 
-    }
+        public string ServiceIcon { get; set; }
+	}
 }

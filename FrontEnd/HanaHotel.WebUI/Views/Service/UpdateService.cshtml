@@ -1,4 +1,5 @@
-﻿
+﻿@model HanaHotel.WebUI.DTOs.ServiceDTO.UpdateServiceDTO
+
 @{
     ViewData["Title"] = "Cập nhật dịch vụ";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
@@ -6,37 +7,38 @@
 
 <h1>Cập nhật dịch vụ</h1>
 
+<form method="post" asp-action="UpdateService" asp-controller="Service">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-@model UpdateServiceDTO
+    <input type="hidden" asp-for="Id" />
 
-
-<form method="post">
-    <input type="hidden" asp-for="ServiceId" />
-
-    <div class="form-group">
-        <label asp-for="ServiceIcon" class="control-label">Biểu tượng</label>
-        <input asp-for="ServiceIcon" class="form-control" placeholder="Nhập tên biểu tượng (ví dụ: fass fa-spa)" />
-        <span asp-validation-for="ServiceIcon" class="text-danger"></span>
+    <div class="form-group mb-3">
+        <label asp-for="ServiceName" class="form-label">Tên dịch vụ</label>
+        <input asp-for="ServiceName" class="form-control" placeholder="Nhập tên dịch vụ" />
+        <span asp-validation-for="ServiceName" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Title" class="control-label">Tên dịch vụ</label>
-        <input asp-for="Title" class="form-control" placeholder="Nhập tên dịch vụ" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+    <div class="form-group mb-3">
+        <label asp-for="Price" class="form-label">Giá</label>
+        <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="Nhập giá (số)" />
+        <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Description" class="control-label">Mô tả</label>
-        <input asp-for="Description" class="form-control" placeholder="Nhập mô tả dịch vụ" />
+    <div class="form-group mb-3">
+        <label asp-for="Unit" class="form-label">Đơn vị</label>
+        <input asp-for="Unit" class="form-control" placeholder="Ví dụ: VND, phòng, lần..." />
+        <span asp-validation-for="Unit" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Description" class="form-label">Mô tả</label>
+        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Mô tả (tuỳ chọn)"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
-
     </div>
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Cập nhật</button>
-        <a href="@Url.Action("Index", "Service")" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Quay lại
-        </a>
-
+        <a asp-controller="Service" asp-action="Index" class="btn btn-secondary ms-2">Quay lại</a>
     </div>
-</form> 
+</form>

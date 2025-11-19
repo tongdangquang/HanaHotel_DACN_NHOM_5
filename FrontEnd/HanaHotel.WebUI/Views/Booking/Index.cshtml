@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -14,8 +13,8 @@
         @await Component.InvokeAsync("_SpinnerPartial")
         @await Component.InvokeAsync("_NavbarPartial")
         @await Component.InvokeAsync("_BookingCoverPartial")
-        @await Html.PartialAsync("_AddBookingMinimizePartial.cshtml")
-        @await Html.PartialAsync("_AddBookingPartial.cshtml")
+        @await Html.PartialAsync("_AddBookingMinimizePartial")
+        @await Html.PartialAsync("_AddBookingPartial")
         @await Component.InvokeAsync("_FooterPartial")
 
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" title="Lên đầu trang">

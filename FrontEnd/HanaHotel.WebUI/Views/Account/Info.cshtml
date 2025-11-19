@@ -1,4 +1,4 @@
-﻿@model HanaHotel.EntityLayer.Concrete.AppUser
+﻿@model HanaHotel.EntityLayer.Concrete.User
 @{
     Layout = null;
     ViewBag.Title = "Thông tin tài khoản";
@@ -35,31 +35,25 @@
                         <dd class="col-sm-9">@Model.UserName</dd>
 
                         <dt class="col-sm-3">Email</dt>
-                        <dd class="col-sm-9">@Model.Email</dd>
+                        <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.Email) ? Model.Email : "-")</dd>
 
                         <dt class="col-sm-3">Họ & tên</dt>
-                        <dd class="col-sm-9">@($"{Model.Name} {Model.LastName}")</dd>
+                        <dd class="col-sm-9">@Model.Name</dd>
 
-                        <dt class="col-sm-3">Thành phố</dt>
-                        <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.City) ? Model.City : "-")</dd>
+                        <dt class="col-sm-3">Ngày sinh</dt>
+                        <dd class="col-sm-9">@Model.DateOfBirth.ToString("dd/MM/yyyy")</dd>
 
-                        <dt class="col-sm-3">Bộ phận</dt>
-                        <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.Department) ? Model.Department : "-")</dd>
+                        <dt class="col-sm-3">Giới tính</dt>
+                        <dd class="col-sm-9">@Model.Gender.ToString()</dd>
 
-                        <dt class="col-sm-3">Địa điểm làm việc</dt>
-                        <dd class="col-sm-9">
-                            @if (Model.WorkLocation is not null)
-                            {
-                                @($"{Model.WorkLocation.WorkLocationCityName}, {Model.WorkLocation.WorkLocationCountry}")
-                            }
-                            else
-                            {
-                                @("-")
-                            }
-                        </dd>
+                        <dt class="col-sm-3">Địa chỉ</dt>
+                        <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.Address) ? Model.Address : "-")</dd>
+
+                        <dt class="col-sm-3">Số điện thoại</dt>
+                        <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.Phone) ? Model.Phone : "-")</dd>
 
                         <dt class="col-sm-3">Vai trò</dt>
-                        <dd class="col-sm-9">@((string?)ViewBag.Role ?? "-")</dd>
+                        <dd class="col-sm-9">@((string?)ViewBag.Role ?? $"RoleId: {Model.RoleId}")</dd>
                     </dl>
 
                     <hr />
@@ -68,7 +62,7 @@
                         <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger"
                            onclick="return confirm('Bạn có chắc muốn đăng xuất?');">Đăng xuất</a>
 
-                        <a asp-controller="Account" asp-action="Edit" class="btn btn-primary">Chỉnh sửa thông tin</a>
+                        <a asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Chỉnh sửa thông tin</a>
 
                         <a asp-controller="Default" asp-action="Index" class="btn btn-secondary ms-auto">Quay lại</a>
                     </div>

@@ -54,7 +54,7 @@ namespace HanaHotel.WebUI.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
-            var existingBookingResponse = await client.GetAsync($"{_apiUrl}/api/Booking/{updateBookingDTO.BookingId}");
+            var existingBookingResponse = await client.GetAsync($"{_apiUrl}/api/Booking/{updateBookingDTO.Id}");
 
             if (!existingBookingResponse.IsSuccessStatusCode)
             {

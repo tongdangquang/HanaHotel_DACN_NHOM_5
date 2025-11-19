@@ -1,4 +1,4 @@
-﻿@model List<ResultBookingDTO>
+﻿@model List<HanaHotel.WebUI.DTOs.BookingDTO.ResultBookingDTO>
 
 @{
     ViewData["Title"] = "Quản lý đặt phòng";
@@ -19,11 +19,10 @@
                             <th scope="col">#</th>
                             <th scope="col">Họ và tên</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Ngày đặt</th>
                             <th scope="col">Ngày nhận phòng</th>
                             <th scope="col">Ngày trả phòng</th>
-                            <th scope="col">Người lớn</th>
-                            <th scope="col">Trẻ em</th>
-                            <th scope="col">Phòng</th>
+                            <th scope="col">Phòng (ID)</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Yêu cầu đặc biệt</th>
                             <th scope="col" class="text-center">Hành động</th>
@@ -33,36 +32,35 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.BookingId</td>
-                                <td>@item.Name</td>
+                                <td>@item.Id</td>
+                                <td>@item.FullName</td>
                                 <td>@item.Email</td>
+                                <td>@item.BookingDate.ToString("dd MMMM yyyy")</td>
                                 <td>@item.CheckInDate.ToString("dd MMMM yyyy")</td>
                                 <td>@item.CheckOutDate.ToString("dd MMMM yyyy")</td>
-                                <td>@item.AdultCount</td>
-                                <td>@item.ChildCount</td>
-                                <td>@item.Room</td>
+                                <td>@item.RoomId</td>
                                 <td>
-                                    <span class="badge
-                                    @(item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Pending ? "badge-warning" :
-                                      item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Confirmed ? "badge-success" :
-                                      item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Cancelled ? "badge-danger" :
-                                      item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Completed ? "badge-primary" :
-                                      "badge-secondary")">
+                                    <span class="badge @(
+                                        item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Pending ? "bg-warning text-dark" :
+                                        item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Confirmed ? "bg-success" :
+                                        item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Cancelled ? "bg-danger" :
+                                        item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Completed ? "bg-primary" :
+                                        "bg-secondary")">
                                         @(
                                             item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Pending ? "Chờ xử lý" :
                                             item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Confirmed ? "Đã xác nhận" :
                                             item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Cancelled ? "Đã hủy" :
                                             item.Status == HanaHotel.EntityLayer.Concrete.BookingStatus.Completed ? "Hoàn thành" :
                                             "Không xác định"
-                                            )
+                                        )
                                     </span>
                                 </td>
-                                <td>@(item.SpecialRequest ?? "Không có")</td>
+                                <td>@(item.AdditionalRequest ?? "Không có")</td>
                                 <td class="text-center">
-                                    <a href="/AdminBooking/UpdateBooking/@item.BookingId" class="btn btn-warning btn-sm" title="Chỉnh sửa đặt phòng">
+                                    <a asp-controller="AdminBooking" asp-action="UpdateBooking" asp-route-id="@item.Id" class="btn btn-warning btn-sm" title="Chỉnh sửa đặt phòng">
                                         <i class="fa fa-pencil"></i> Sửa
                                     </a>
-                                    <a href="/AdminBooking/DeleteBooking/@item.BookingId"
+                                    <a asp-controller="AdminBooking" asp-action="DeleteBooking" asp-route-id="@item.Id"
                                        class="btn btn-danger btn-sm"
                                        title="Xóa đặt phòng"
                                        onclick="return confirm('Bạn có chắc chắn muốn xóa đặt phòng này không?');">

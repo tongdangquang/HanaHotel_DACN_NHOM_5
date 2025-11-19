@@ -14,7 +14,7 @@
     <option value="">(Không chọn)</option>
     @foreach (var s in services)
     {
-        var isSel = selectedId.HasValue && selectedId.Value == s.ServiceId;
-        <option value="@s.ServiceId" selected="@(isSel ? "selected" : null)">@s.Title</option>
+        var isSel = selectedId.HasValue && selectedId.Value == s.Id;
+        <option value="@s.Id" selected="@(isSel ? "selected" : null)">@s.ServiceName</option>
     }
 </select>

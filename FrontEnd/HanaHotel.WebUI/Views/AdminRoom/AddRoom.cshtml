@@ -1,60 +1,52 @@
-﻿@model AddRoomDTO
+﻿@model HanaHotel.WebUI.DTOs.RoomDTO.AddRoomDTO
+@using HanaHotel.EntityLayer.Concrete
 
 @{
     ViewData["Title"] = "Thêm phòng";
     Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
-<form method="post">
-    <div class="form-group">
-        <label asp-for="RoomNumber" class="control-label">Số phòng</label>
-        <input asp-for="RoomNumber" class="form-control" />
-        <span asp-validation-for="RoomNumber" class="text-danger"></span>
+<form method="post" asp-action="AddRoom" asp-controller="AdminRoom">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="RoomName" class="form-label">Tiêu đề</label>
+        <input asp-for="RoomName" class="form-control" />
+        <span asp-validation-for="RoomName" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="RoomCoverImage" class="control-label">Ảnh phòng</label>
-        <input asp-for="RoomCoverImage" class="form-control" />
-        <span asp-validation-for="RoomCoverImage" class="text-danger"></span>
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label">Trạng thái</label>
+        <select asp-for="Status" class="form-select" asp-items="@(Html.GetEnumSelectList<RoomStatus>())"></select>
+        <span asp-validation-for="Status" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Price" class="control-label">Giá</label>
-        <input asp-for="Price" class="form-control" type="number" />
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Giá</label>
+        <input asp-for="Price" type="number" step="0.01" class="form-control" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Title" class="control-label">Tiêu đề</label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+    <div class="mb-3">
+        <label asp-for="Size" class="form-label">Kích thước</label>
+        <input asp-for="Size" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="Size" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="BedCount" class="control-label">Số giường</label>
+    <div class="mb-3">
+        <label asp-for="BedCount" class="form-label">Số giường</label>
         <input asp-for="BedCount" class="form-control" />
         <span asp-validation-for="BedCount" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="BathCount" class="control-label">Số phòng tắm</label>
-        <input asp-for="BathCount" class="form-control" />
-        <span asp-validation-for="BathCount" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Wifi" class="control-label">Wifi</label>
-        <input asp-for="Wifi" class="form-control" />
-        <span asp-validation-for="Wifi" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Description" class="control-label">Mô tả</label>
-        <textarea asp-for="Description" class="form-control"></textarea>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Mô tả</label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
         <button type="submit" class="btn btn-primary">Thêm phòng</button>
+        <a asp-controller="AdminRoom" asp-action="Index" class="btn btn-secondary ms-2">Hủy</a>
     </div>
 </form>

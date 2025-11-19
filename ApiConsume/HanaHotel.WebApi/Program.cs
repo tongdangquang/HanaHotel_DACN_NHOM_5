@@ -12,30 +12,40 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>();
 
 // DataAccessLayer
-builder.Services.AddScoped<IStaffDal, EfStaffDAL>();
-builder.Services.AddScoped<IRoomDal, EfRoomDAL>();
-builder.Services.AddScoped<ISubscribeDal, EfSubscribeDAL>();
-builder.Services.AddScoped<ITestimonialDal, EfTestimonialDAL>();
-builder.Services.AddScoped<IServiceDal, EfServiceDAL>();
 builder.Services.AddScoped<IAboutDal, EfAboutDAL>();
 builder.Services.AddScoped<IBookingDal, EfBookingDAL>();
 builder.Services.AddScoped<IContactDal, EfContactDAL>();
 builder.Services.AddScoped<IGuestDal, EfGuestDAL>();
+builder.Services.AddScoped<IImageDal, EfImageDAL>();
 builder.Services.AddScoped<IMessageCategoryDal, EfMessageCategoryDAL>();
-builder.Services.AddScoped<IWorkLocationDal, EfWorkLocationDAL>();
+builder.Services.AddScoped<IPaymentMethodDal, EfPaymentMethodDAL>();
+builder.Services.AddScoped<IPromotionDal, EfPromotionDAL>();
+builder.Services.AddScoped<IPromotionDetailDal, EfPromotionDetailDAL>();
+builder.Services.AddScoped<IReviewDal, EfReviewDAL>();
+builder.Services.AddScoped<IRoleDal, EfRoleDAL>();
+builder.Services.AddScoped<IRoomDal, EfRoomDAL>();
+builder.Services.AddScoped<IRoomDetailDal, EfRoomDetailDAL>();
+builder.Services.AddScoped<IServiceDal, EfServiceDAL>();
+builder.Services.AddScoped<IServiceDetailDal, EfServiceDetailDAL>();
+builder.Services.AddScoped<IUserDal, EfUserDAL>();
 
 // BusinessLayer
-builder.Services.AddScoped<IStaffService, StaffManager>();
-builder.Services.AddScoped<IRoomService, RoomManager>();
-builder.Services.AddScoped<ISubscribeService, SubscribeManager>();
-builder.Services.AddScoped<ITestimonialService, TestimonialManager>();
-builder.Services.AddScoped<IServiceService, ServiceManager>();
-builder.Services.AddScoped<IAboutService, AboutManager>();
-builder.Services.AddScoped<IBookingService, BookingManager>();
-builder.Services.AddScoped<IContactService, ContactManager>();
-builder.Services.AddScoped<IGuestService, GuestManager>();
-builder.Services.AddScoped<IMessageCategoryService, MessageCategoryManager>();
-builder.Services.AddScoped<IWorkLocationService, WorkLocationManager>();
+builder.Services.AddScoped<IAboutService, AboutService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IGuestService, GuestService>();
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IMessageCategoryService, MessageCategoryService>();
+builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+builder.Services.AddScoped<IPromotionService, PromotionService>();
+builder.Services.AddScoped<IPromotionDetailService, PromotionDetailService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IRoomDetailService, RoomDetailService>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IServiceDetailService, ServiceDetailService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

@@ -1,43 +1,40 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using HanaHotel.EntityLayer.Concrete;
 using HanaHotel.WebUI.DTOs.UserDTO;
+using System.Threading.Tasks;
 
 namespace HanaHotel.WebUI.Controllers
 {
-	[Authorize] // chỉ người đăng nhập mới truy cập được
+	[Authorize] // only authenticated users can access
 	public class AccountController : Controller
 	{
-		private readonly SignInManager<AppUser> _signInManager;
-		private readonly UserManager<AppUser> _userManager;
+		private readonly SignInManager<User> _signInManager;
+		private readonly UserManager<User> _userManager;
 
-		public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+		public AccountController(SignInManager<User> signInManager, UserManager<User> userManager)
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
 		}
 
-		// Trang thông tin tài khoản
+		// Account info page
 		[HttpGet]
 		public async Task<IActionResult> Info()
 		{
-			// Lấy tên người dùng từ session
 			var username = HttpContext.Session.GetString("UserName");
 			if (string.IsNullOrEmpty(username))
 			{
 				return RedirectToAction("Index", "Login");
 			}
 
-			// Lấy thông tin user từ Identity, bao gồm WorkLocation nếu có
-			var user = await _userManager.Users
-				.Include(u => u.WorkLocation)
-				.FirstOrDefaultAsync(u => u.UserName == username);
-
+			// Use Identity APIs to fetch user
+			var user = await _userManager.FindByNameAsync(username);
 			if (user == null)
 			{
-				// Nếu session sai, quay lại đăng nhập
+				// Session may be invalid — clear and redirect to login
 				HttpContext.Session.Clear();
 				return RedirectToAction("Index", "Login");
 			}
@@ -46,92 +43,97 @@ namespace HanaHotel.WebUI.Controllers
 			ViewBag.Email = user.Email;
 			ViewBag.Role = HttpContext.Session.GetString("UserRole");
 
-			// Truyền model vào view để Info.cshtml không nhận null
 			return View(user);
 		}
 
-		// Đăng xuất
+		// Logout
 		[HttpGet]
 		public async Task<IActionResult> Logout()
 		{
-			// Đăng xuất khỏi Identity (xóa cookie)
 			await _signInManager.SignOutAsync();
-
-			// Xóa toàn bộ session
 			HttpContext.Session.Clear();
-
-			// Quay lại trang chủ
 			return RedirectToAction("Index", "Default");
 		}
 
-        // GET: show edit form for currently logged-in user
-        [HttpGet]
-        public async Task<IActionResult> Edit()
-        {
-            var username = HttpContext.Session.GetString("UserName");
-            if (string.IsNullOrEmpty(username))
-                return RedirectToAction("Index", "Login");
+		// GET: show edit form for currently logged-in user
+		[HttpGet]
+		public async Task<IActionResult> Edit()
+		{
+			var username = HttpContext.Session.GetString("UserName");
+			if (string.IsNullOrEmpty(username))
+				return RedirectToAction("Index", "Login");
 
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == username);
-            if (user == null)
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Index", "Login");
-            }
+			var user = await _userManager.FindByNameAsync(username);
+			if (user == null)
+			{
+				HttpContext.Session.Clear();
+				return RedirectToAction("Index", "Login");
+			}
 
-            var model = new EditAccountDTO
-            {
-                Id = user.Id,
-                Name = user.Name,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                City = user.City,
-                Department = user.Department
-            };
+			// Map User -> EditAccountDTO (align with current DTO)
+			var model = new EditAccountDTO
+			{
+				Id = user.Id,
+				Name = user.Name,                      // DTO.Name expected to hold full name
+				DateOfBirth = user.DateOfBirth,
+				Gender = user.Gender,
+				Address = user.Address,
+				Phone = user.Phone,
+				Email = user.Email,
+				UserName = user.UserName,
+				RoleId = user.RoleId
+			};
 
-            return View(model);
-        }
+			return View(model);
+		}
 
-        // POST: save edits
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditAccountDTO model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
+		// POST: save edits
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(EditAccountDTO model)
+		{
+			if (!ModelState.IsValid)
+				return View(model);
 
-            var user = await _userManager.FindByIdAsync(model.Id.ToString());
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Không tìm thấy người dùng.");
-                return View(model);
-            }
+			var user = await _userManager.FindByIdAsync(model.Id.ToString());
+			if (user == null)
+			{
+				ModelState.AddModelError(string.Empty, "User not found.");
+				return View(model);
+			}
 
-            // Update fields
-            user.Name = model.Name;
-            user.LastName = model.LastName;
-            user.UserName = model.UserName;
-            user.Email = model.Email;
-            user.PhoneNumber = model.PhoneNumber;
-            user.City = model.City;
-            user.Department = model.Department;
+			// Map fields from DTO to User
+			user.Name = model.Name;
+			user.DateOfBirth = model.DateOfBirth;
+			user.Gender = model.Gender;
+			user.UserName = model.UserName;
+			user.Email = model.Email;
+			user.Phone = model.Phone;
+			user.Address = model.Address;
+			user.RoleId = model.RoleId;
 
-            if (!string.IsNullOrEmpty(model.Password))
-            {
-                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
-            }
+			if (!string.IsNullOrEmpty(model.Password))
+			{
+				// Hash password and set PasswordHash
+				user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
+			}
 
-            var result = await _userManager.UpdateAsync(user);
-            if (!result.Succeeded)
-            {
-                foreach (var err in result.Errors)
-                    ModelState.AddModelError(string.Empty, err.Description);
-                return View(model);
-            }
+			var result = await _userManager.UpdateAsync(user);
+			if (!result.Succeeded)
+			{
+				foreach (var err in result.Errors)
+					ModelState.AddModelError(string.Empty, err.Description);
+				return View(model);
+			}
 
-            return RedirectToAction("Info");
-        }
+			// Optionally update session username/email if changed
+			HttpContext.Session.SetString("UserName", user.UserName ?? string.Empty);
+			if (!string.IsNullOrEmpty(user.RoleId.ToString()))
+			{
+				HttpContext.Session.SetString("UserRole", HttpContext.Session.GetString("UserRole") ?? string.Empty);
+			}
+
+			return RedirectToAction("Info");
+		}
 	}
 }

@@ -4,41 +4,43 @@ using HanaHotel.EntityLayer.Concrete;
 
 namespace HanaHotel.DataAccessLayer.Concrete
 {
-    public class DataContext : IdentityDbContext<AppUser, AppRole, int>
+    public class DataContext : IdentityDbContext<User, Role, int>
     {
-        public DbSet<Room> Rooms { get; set; }
-        public DbSet<Service> Services { get; set; }
-        public DbSet<Staff> Staffs { get; set; }
-        public DbSet<Subscribe> Subscribes { get; set; }
-        public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<About> Abouts { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Guest> Guests { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Guest> Guests { get; set; }
+        public DbSet<Image> Images { get; set; }
         public DbSet<MessageCategory> MessageCategories { get; set; }
-        public DbSet<WorkLocation> WorkLocations { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<PromotionDetail> PromotionDetails { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<RoomDetail> RoomDetails { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<ServiceDetail> ServiceDetails { get; set; }
+        public DbSet<User> Users { get; set; } // Identity users stored here
+        public DbSet<Role> Roles { get; set; } // Identity roles stored here
 
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
 
-
+        // Nếu bạn vẫn cần OnConfiguring (ví dụ để dev), giữ nhưng khi dùng AddDbContext từ WebUI, options sẽ được cung cấp.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "Server=db31658.public.databaseasp.net; Database=db31658; User Id=db31658; Password=12345678; Encrypt=True; TrustServerCertificate=True; MultipleActiveResultSets=True;";
-			optionsBuilder.UseSqlServer(connectionString);
-		}
+            if (!optionsBuilder.IsConfigured)
+            {
+                var connectionString = "Server=db31658.public.databaseasp.net; Database=db31658; User Id=db31658; Password=12345678; Encrypt=True; TrustServerCertificate=True; MultipleActiveResultSets=True;";
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Contact>()
-                .HasOne(c => c.MessageCategory)
-                .WithMany(cat => cat.Contacts)
-                .HasForeignKey(c => c.MessageCategoryId);
-
-            modelBuilder.Entity<AppUser>()
-                .HasOne(c => c.WorkLocation)
-                .WithMany(c => c.Users)
-                .HasForeignKey(c => c.WorkLocationId);
+            // nếu cần cấu hình thêm cho identity hoặc các entity, bổ sung ở đây
         }
     }
 }

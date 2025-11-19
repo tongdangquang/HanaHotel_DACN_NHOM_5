@@ -8,14 +8,12 @@ namespace HanaHotel.WebApi.Controllers
     public class DashboardWidgetController : ControllerBase
     {
         private readonly IGuestService _guestService;
-        private readonly IStaffService _staffService;
         private readonly IRoomService _roomService;
         private readonly IBookingService _bookingService;
 
-        public DashboardWidgetController(IGuestService guestService, IStaffService staffService, IRoomService roomService, IBookingService bookingService)
+        public DashboardWidgetController(IGuestService guestService, IRoomService roomService, IBookingService bookingService)
         {
             _guestService = guestService;
-            _staffService = staffService;
             _roomService = roomService;
             _bookingService = bookingService;
         }
@@ -25,14 +23,12 @@ namespace HanaHotel.WebApi.Controllers
         {
 
             var guest = _guestService.TGetList();
-            var staffs = _staffService.TGetList();
             var rooms = _roomService.TGetList();
             var bookings = _bookingService.TGetList();
 
             var widgetCounts = new Dictionary<string, string>
             {
                 { "Guests", guest.Count.ToString() },
-                { "Staffs", staffs.Count.ToString() },
                 { "Rooms", rooms.Count.ToString() },
                 { "Bookings", bookings.Count.ToString() }
             };

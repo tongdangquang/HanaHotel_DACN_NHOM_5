@@ -5,10 +5,9 @@
 
 <div class="container-fluid mt-3">
 
-    @await Component.InvokeAsync("_DashboardWidgetPartial")
-    @await Component.InvokeAsync("_DashboardStaffPartial")
-    @await Component.InvokeAsync("_DashboardContactPartial")
-    @await Component.InvokeAsync("_DashboardSocialPartial")
+    @await Html.PartialAsync("_DashboardWidgetPartial")
+    @await Html.PartialAsync("_DashboardContactPartial")
+    @await Html.PartialAsync("_DashboardSocialPartial")
 
 </div>
 

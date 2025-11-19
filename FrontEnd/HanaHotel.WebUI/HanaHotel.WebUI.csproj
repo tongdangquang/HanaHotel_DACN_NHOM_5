@@ -262,6 +262,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\HanaHotel.BusinessLayer\HanaHotel.BusinessLayer.csproj" />
     <ProjectReference Include="..\..\HanaHotel.DataAccessLayer\HanaHotel.DataAccessLayer.csproj" />
     <ProjectReference Include="..\..\HanaHotel.EntityLayer\HanaHotel.EntityLayer.csproj" />
   </ItemGroup>

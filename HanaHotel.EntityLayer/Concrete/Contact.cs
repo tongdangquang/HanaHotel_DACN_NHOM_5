@@ -1,11 +1,13 @@
-﻿namespace HanaHotel.EntityLayer.Concrete
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HanaHotel.EntityLayer.Concrete
 {
     public class Contact
     {
-        public int ContactID { get; set; }
+        [Key]
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-
         public string Subject { get; set; }
 
         public string Message { get; set; }

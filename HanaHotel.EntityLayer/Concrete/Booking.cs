@@ -1,29 +1,30 @@
-﻿namespace HanaHotel.EntityLayer.Concrete
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+
+namespace HanaHotel.EntityLayer.Concrete
 {
     public class Booking
     {
-        public int BookingId { get; set; }
-        public string Name { get; set; }
+        [Key]
+		public int Id { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
-        public DateTime CheckInDate { get; set; }
+        public string Phone { get; set; }
+        public DateTime BookingDate { get; set; }
+		public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
-        public int AdultCount { get; set; }
-        public int ChildCount { get; set; }
-        public string Room { get; set; }
-        public string SpecialRequest { get; set; }
         public BookingStatus Status { get; set; }
-
-        // Added fields
-        public int? ServiceId { get; set; }
-        public int? RoomId { get; set; }
-        public int? UserId { get; set; }
+        [MaybeNull]
+		public string? AdditionalRequest { get; set; }
+        public int RoomId { get; set; }
+        public int UserId { get; set; }
     }
 
     public enum BookingStatus
     {
-        Pending,
-        Confirmed,
-        Cancelled,
-        Completed
+        Pending = 0,
+        Confirmed = 1,
+        Cancelled = 2,
+        Completed = 3
     }
 }

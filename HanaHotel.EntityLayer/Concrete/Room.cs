@@ -1,18 +1,27 @@
-﻿namespace HanaHotel.EntityLayer.Concrete
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+
+namespace HanaHotel.EntityLayer.Concrete
 {
     public class Room
     {
-        public int RoomId { get; set; }
-        public required string RoomNumber { get; set; }
-        public required string RoomCoverImage { get; set; }
-        public required int Price { get; set; }
-        public required string Title { get; set; }
-        public required string BedCount { get; set; }
-        public required string BathCount { get; set; }
-        public required string Wifi { get; set; }
-        public required string Description { get; set; }
-
+        [Key]
+        public int Id { get; set; }
+        public string RoomName { get; set; }
+        public RoomStatus Status { get; set; }
+        public string Description { get; set; }
+        public double Size { get; set; }
+		public double Price { get; set; }
+        public string BedCount { get; set; }
     }
+
+    public enum RoomStatus
+    {
+        Available = 0,
+        Reserved = 1,
+        Occupied = 2,
+        Maintenance = 3
+	}
 }
 
 
